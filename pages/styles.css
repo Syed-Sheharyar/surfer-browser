@@ -31,7 +31,7 @@ body {
 #progressBar {
     display: block;
     width: 100%;
-    height: 3px;
+    height: 2px;
     background-color: var(--primary-color);
 }
 
@@ -69,7 +69,7 @@ body {
 }
 
 #centerPart {
-    flex: 0 1 0;
+    flex: 0 0 0;
     justify-content: space-around;
 }
 
@@ -167,10 +167,11 @@ body {
 
 .barButton:disabled:active {
     border: 2px solid var(--primary-color);
+    background-color: var(--primary-color);
 }
 
 #backButton {
-    margin-left: 80px;
+    margin-left: 75px;
 }
 
 #forwardButton {
@@ -179,8 +180,9 @@ body {
 #refreshButton {
 }
 
-#lockButton {
-    margin-right: 10px;
+#settingsButton {
+    margin-right: 5px;
+    margin-left: 5px;
 
     padding-top: 0px;
     padding-bottom: 5px;
