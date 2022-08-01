@@ -3,14 +3,12 @@ import * as path from "path"
 
 export class View {
     view: BrowserView
-    lockedNav = false
-    lockedURL: string
     constructor(width: number, height: number, tabHeight: number, win: BrowserWindow ) {
         this.view = new BrowserView({
             webPreferences: {
                 nodeIntegration: false,
                 sandbox: true,
-                partition: 'persist:user',
+                partition: 'persist:userSession',
                 javascript: true,
                 webSecurity: true,
                 allowRunningInsecureContent: false,
@@ -26,22 +24,12 @@ export class View {
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
         // this.view.webContents.openDevTools()
 
+        // this.view.webContents.loadFile(path.join(__dirname, "../pages/favorites.html"))
         this.view.webContents.loadURL('https://google.com/')
         let homePage = true
         
-        ipcMain.on('lockButtonPressed', () => {
-            this.lockedNav = !this.lockedNav
-            this.lockedURL = this.view.webContents.getURL()
-            this.lockedURL = this.lockedURL.replaceAll('https://', '').replaceAll('http://', '').replaceAll('www.', '')
-            this.lockedURL = this.lockedURL.substring(0, this.lockedURL.indexOf('/'))
-        })
-        
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
-            if (this.lockedNav && !url.includes(this.lockedURL)) {
-                ev.preventDefault()
-            } else {
-                updateSearchBar(ev, url)
-            }
+            updateSearchBar(ev, url)
         })
 
         
@@ -90,20 +78,16 @@ export class View {
             homePage = false
         })
         
-        // this.view.webContents.on('did-finish-load', () => {
-        //     this.view.webContents.setVisualZoomLevelLimits(1, 3)
-        // })
+        this.view.webContents.on('did-finish-load', () => {
+            this.view.webContents.setVisualZoomLevelLimits(1, 3)
+        })
 
         ipcMain.on('goBack', () => {
-            if (this.view.webContents.getURL().includes(this.lockedURL) || !this.lockedNav) {
-                this.view.webContents.goBack()
-            }
+            this.view.webContents.goBack()
         })
 
         ipcMain.on('goForward', () => {
-            if (this.view.webContents.getURL().includes(this.lockedURL) || !this.lockedNav) {
-                this.view.webContents.goForward()
-            }
+            this.view.webContents.goForward()
         })
 
         ipcMain.on('refreshPage', () => {

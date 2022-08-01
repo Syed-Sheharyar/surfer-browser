@@ -1,19 +1,24 @@
 const backButton = <HTMLButtonElement>document.getElementById('backButton')
 const forwardButton = <HTMLButtonElement>document.getElementById('forwardButton')
-const refreshButton = document.getElementById('refreshButton')
-const lockButton = document.getElementById('lockButton')
+const refreshButton = <HTMLButtonElement>document.getElementById('refreshButton')
+const settingsButton = <HTMLButtonElement>document.getElementById('settingsButton')
 const searchBar = <HTMLInputElement>document.getElementById('searchBar')
 const titleBar = document.getElementById('tabBar')
 const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searchBar')
 
-document.documentElement.setAttribute('data-theme', 'light')
+// document.documentElement.setAttribute('data-theme', 'light')
+document.documentElement.setAttribute('data-theme', 'dark')
+
+window.api.handleSetTheme((theme: string) => {
+    document.documentElement.setAttribute('data-theme', theme)
+})
 
 window.api.handleRemoveLeftMargin(() => {
-    backButton.style.marginLeft = '10px'
+    backButton.style.marginLeft = '5px'
 })
 
 window.api.handleRestoreLeftMargin(() => {
-    backButton.style.marginLeft = '80px'
+    backButton.style.marginLeft = '75px'
 })
 
 backButton.addEventListener('click', () => {
@@ -28,16 +33,8 @@ refreshButton.addEventListener('click', () => {
     window.api.refreshButtonPressed()
 })
 
-let locked = false
-lockButton.addEventListener('click', () => {
-    window.api.lockButtonPressed()
-    if (!locked) {
-        lockButton.innerHTML = '&#128274'
-        locked = true
-    } else {
-        lockButton.innerHTML = '&#128275'
-        locked = false
-    }
+settingsButton.addEventListener('click', () => {
+    window.api.toggleSettings()
 })
 
 window.api.handleCanGoBack((_ev: Event, canGoBack: boolean) => {

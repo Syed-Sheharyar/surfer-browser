@@ -21,4 +21,8 @@ contextBridge.exposeInMainWorld('api', {
     searchBarQueryEntered: (query: string) => ipcRenderer.send('searchBarQueryEntered', query),
 
     titleBarDoubleClicked: () => ipcRenderer.send('titleBarDoubleClicked'),
+
+    toggleSettings: () => ipcRenderer.send('toggleSettings'),
+
+    handleSetTheme: (callback: any) => ipcRenderer.on('setTheme', callback),
 })

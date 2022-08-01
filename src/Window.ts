@@ -1,20 +1,23 @@
-import { BrowserWindow, ipcMain, systemPreferences } from "electron"
+import { BrowserWindow, ipcMain, nativeTheme, systemPreferences } from "electron"
 import * as path from "path"
 
 export class Window {
     win: BrowserWindow
 
-    constructor(width: number, height: number, devTools: boolean) {
+    constructor(width: number, height: number, devTools: boolean, theme: string) {
         this.win = new BrowserWindow({
             width: width,
             height: height,
-            minWidth: 532,
+            // x: 843,
+            // y: 0,
+            minWidth: 523,
+            minHeight: 350,
             title: "Surfer",
             webPreferences: {
                 preload: path.join(__dirname, "preload.js"),
             },
             titleBarStyle: "hiddenInset",
-            backgroundColor: "#dadada",
+            backgroundColor: (theme === "dark") ? "#262626" : "#dadada",
         })
         
         this.win.loadFile(path.join(__dirname, "../pages/index.html"))
@@ -43,8 +46,15 @@ export class Window {
             this.win.on('leave-full-screen', () => {
                 this.win.webContents.send('restoreLeftMargin')
             })
+        } else {
+            this.win.webContents.send('removeLeftMargin')
         }
 
-        this.win.webContents.send('setTheme', 'light')
+        // this.win.webContents.send('setTheme', 'light')
+        // this.win.webContents.send('setTheme', 'dark')
+    }
+
+    setTheme(theme: 'dark' | 'light'): void {
+        this.win.webContents.send('setTheme', theme)
     }
 }
