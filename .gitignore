@@ -2,3 +2,8 @@ node_modules
 dist
 .DS_Store
 Surfer-darwin-x64
+Surfer-darwin-arm64
+Surfer-linux-arm64
+Surfer-linux-armv7l
+Surfer-linux-x64
+Surfer-mas-x64

@@ -1,7 +1,7 @@
 const backButton = <HTMLButtonElement>document.getElementById('backButton')
 const forwardButton = <HTMLButtonElement>document.getElementById('forwardButton')
 const refreshButton = <HTMLButtonElement>document.getElementById('refreshButton')
-const settingsButton = <HTMLButtonElement>document.getElementById('settingsButton')
+// const settingsButton = <HTMLButtonElement>document.getElementById('settingsButton')
 const searchBar = <HTMLInputElement>document.getElementById('searchBar')
 const titleBar = document.getElementById('tabBar')
 const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searchBar')
@@ -33,9 +33,9 @@ refreshButton.addEventListener('click', () => {
     window.api.refreshButtonPressed()
 })
 
-settingsButton.addEventListener('click', () => {
-    window.api.toggleSettings()
-})
+// settingsButton.addEventListener('click', () => {
+//     window.api.toggleSettings()
+// })
 
 window.api.handleCanGoBack((_ev: Event, canGoBack: boolean) => {
     backButton.disabled = !canGoBack
