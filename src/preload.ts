@@ -1,22 +1,20 @@
-import { contextBridge, ipcRenderer } from "electron"
+import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
 
 contextBridge.exposeInMainWorld('api', {
 
-    handleRemoveLeftMargin: (callback: any) => ipcRenderer.on('removeLeftMargin', callback),
-    handleRestoreLeftMargin: (callback: any) => ipcRenderer.on('restoreLeftMargin', callback),
+    handleRemoveLeftMargin: (callback: () => void) => ipcRenderer.on('removeLeftMargin', callback),
+    handleRestoreLeftMargin: (callback: () => void) => ipcRenderer.on('restoreLeftMargin', callback),
 
-    handleTest: (callback: any) => ipcRenderer.on('test', callback),
-
-    handleSetSearchBar: (callback: any) => ipcRenderer.on('setSearchBar', callback),
-    handleSetSearchBarURL: (callback: any) => ipcRenderer.on('setSearchBarURL', callback),
+    handleSetSearchBar: (callback: (_ev: Event, text: string) => void) => ipcRenderer.on('setSearchBar', callback),
+    handleSetSearchBarURL: (callback: (_ev: Event, text: string) => void) => ipcRenderer.on('setSearchBarURL', callback),
 
     backButtonPressed: () => ipcRenderer.send('goBack'),
     forwardButtonPressed: () => ipcRenderer.send('goForward'),
     refreshButtonPressed: () => ipcRenderer.send('refreshPage'),
     lockButtonPressed: () => ipcRenderer.send('lockButtonPressed'),
 
-    handleCanGoBack: (callback: any) => ipcRenderer.on('canGoBack', callback),
-    handleCanGoForward: (callback: any) => ipcRenderer.on('canGoForward', callback),
+    handleCanGoBack: (callback: () => void) => ipcRenderer.on('canGoBack', callback),
+    handleCanGoForward: (callback: () => void) => ipcRenderer.on('canGoForward', callback),
 
     searchBarQueryEntered: (query: string) => ipcRenderer.send('searchBarQueryEntered', query),
 
@@ -24,5 +22,9 @@ contextBridge.exposeInMainWorld('api', {
 
     toggleSettings: () => ipcRenderer.send('toggleSettings'),
 
-    handleSetTheme: (callback: any) => ipcRenderer.on('setTheme', callback),
+    handleSetTheme: (callback: (_ev: IpcRendererEvent, theme: 'dark' | 'light') => void) => ipcRenderer.on('setTheme', callback),
+
+    handleStartedLoading: (callback: () => void) => ipcRenderer.on('startedLoading', callback),
+
+    handleFinishedLoading: (callback: () => void) => ipcRenderer.on('finishedLoading', callback),
 })

@@ -1,16 +1,25 @@
 const backButton = <HTMLButtonElement>document.getElementById('backButton')
 const forwardButton = <HTMLButtonElement>document.getElementById('forwardButton')
 const refreshButton = <HTMLButtonElement>document.getElementById('refreshButton')
-// const settingsButton = <HTMLButtonElement>document.getElementById('settingsButton')
+const settingsButton = <HTMLButtonElement>document.getElementById('settingsButton')
 const searchBar = <HTMLInputElement>document.getElementById('searchBar')
+const progressBar = document.getElementById('progressBar')
 const titleBar = document.getElementById('tabBar')
 const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searchBar')
 
 // document.documentElement.setAttribute('data-theme', 'light')
 document.documentElement.setAttribute('data-theme', 'dark')
 
-window.api.handleSetTheme((theme: string) => {
+window.api.handleSetTheme((_ev: Event, theme: 'dark' | 'light') => {
     document.documentElement.setAttribute('data-theme', theme)
+})
+
+window.api.handleStartedLoading(() => {
+    progressBar.style.backgroundColor = 'var(--loading-blue)'
+})
+
+window.api.handleFinishedLoading(() => {
+    progressBar.style.backgroundColor = 'var(--primary-color)'
 })
 
 window.api.handleRemoveLeftMargin(() => {
@@ -33,9 +42,9 @@ refreshButton.addEventListener('click', () => {
     window.api.refreshButtonPressed()
 })
 
-// settingsButton.addEventListener('click', () => {
-//     window.api.toggleSettings()
-// })
+settingsButton.addEventListener('click', () => {
+    window.api.toggleSettings()
+})
 
 window.api.handleCanGoBack((_ev: Event, canGoBack: boolean) => {
     backButton.disabled = !canGoBack

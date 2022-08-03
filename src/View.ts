@@ -1,5 +1,4 @@
 import { BrowserView, BrowserWindow, ipcMain, dialog } from "electron"
-import * as path from "path"
 
 export class View {
     view: BrowserView
@@ -15,7 +14,8 @@ export class View {
                 contextIsolation: true,
                 webviewTag: false,
                 zoomFactor: 1.0,
-                navigateOnDragDrop: true
+                navigateOnDragDrop: true,
+                scrollBounce: true,
             }
         })
         win.addBrowserView(this.view)
@@ -48,14 +48,10 @@ export class View {
             }
         })
         
-        this.view.webContents.setWindowOpenHandler((details: any) => {
+        this.view.webContents.setWindowOpenHandler((details: Electron.HandlerDetails) => {
             // Do stuff: open a new tab, navigate current tab, etc.
             this.view.webContents.loadURL(details.url)
-            return {action: 'deny'}
-        })
-
-        this.view.webContents.on('did-fail-load', () => {
-            console.log('failed loading the page!')
+            return { action: 'deny' }
         })
         
         this.view.webContents.on('enter-html-full-screen', () => {
@@ -74,12 +70,32 @@ export class View {
             win.webContents.send('canGoForward', this.view.webContents.canGoForward())
         })
 
-        this.view.webContents.once('did-finish-load', () => {
+        this.view.webContents.on('did-finish-load', () => {
             homePage = false
         })
-        
-        this.view.webContents.on('did-finish-load', () => {
+
+        // this.view.webContents.on('did-navigate', () => {
+        //     if (!this.view.webContents.canGoBack()) {
+        //         homePage = true
+        //     }
+        // })
+
+        const doneLoading = () => {
             this.view.webContents.setVisualZoomLevelLimits(1, 3)
+            win.webContents.send('finishedLoading')
+        }
+        
+        this.view.webContents.on('did-finish-load', doneLoading)
+
+        this.view.webContents.on('did-stop-loading', doneLoading)
+        
+        this.view.webContents.on('did-start-loading', () => {
+            win.webContents.send('startedLoading')
+        })
+
+        this.view.webContents.on('did-fail-load', () => {
+            console.log('failed loading the page!')
+            doneLoading()
         })
 
         ipcMain.on('goBack', () => {

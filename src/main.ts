@@ -1,4 +1,4 @@
-import { app, BrowserView, BrowserWindow, ipcMain, nativeTheme, systemPreferences } from "electron"
+import { app, BrowserView, ipcMain, nativeTheme } from "electron"
 
 import { Window } from "./Window"
 import { View } from "./View"
@@ -6,6 +6,7 @@ import { OverlayView } from "./Dropdown"
 
 declare global {
     interface Window {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         api?: any
     }
 }
@@ -34,21 +35,21 @@ function setTheme() {
     // nativeTheme.themeSource = 'light'
     nativeTheme.themeSource = 'dark'
     
-    win.setTheme('dark')
+    // win.setTheme('dark')
 
-    const checkTime = () => {
-        const currentTime = new Date()
-        const hours = currentTime.getHours()
-        if (hours > 20 || hours < 5) {
-            nativeTheme.themeSource = 'dark'
-            win.setTheme('dark')
-            console.log('Setting the theme to dark')
-        } else {
-            nativeTheme.themeSource = 'light'
-            win.setTheme('light')
-            console.log('Setting the theme to light')
-        }
-    }
+    // const checkTime = () => {
+    //     const currentTime = new Date()
+    //     const hours = currentTime.getHours()
+    //     if (hours > 20 || hours < 5) {
+    //         nativeTheme.themeSource = 'dark'
+    //         win.setTheme('dark')
+    //         console.log('Setting the theme to dark')
+    //     } else {
+    //         nativeTheme.themeSource = 'light'
+    //         win.setTheme('light')
+    //         console.log('Setting the theme to light')
+    //     }
+    // }
 
     // checkTime()
     // setInterval(checkTime, 60000)
@@ -57,7 +58,7 @@ function setTheme() {
 function createWindow() {
     app.setName('Surfer')
 
-    win = new Window(800, 600, false, 'dark')
+    win = new Window(800, 600, false, 'light')
     view = new View(800, 600, 37, win.win)
 
     setUserAgent(view.view)
@@ -65,7 +66,20 @@ function createWindow() {
     // win = new Window(523, 745, false)
     // view = new View(523, 745, 37, win.win)
     
-    // const settingsDropdown = new OverlayView(600, 37, 190, 350, '../pages/settings.html', 'toggleSettings', win.win, view.view)
+    let settingsDropdown: OverlayView = null
+    
+    ipcMain.on('toggleSettings', () => {
+        if (settingsDropdown == null) {
+            settingsDropdown = new OverlayView(660, 35, 130, 116, '../pages/settings.html', win.win, 'dark')
+        } else {
+            settingsDropdown.destruct()
+            settingsDropdown = null
+        }
+    })
+
+    ipcMain.on('toggleTheme', (_ev: Event, theme: string) => {
+        console.log('toggleTheme', theme)
+    })
 
     setTheme()
 }

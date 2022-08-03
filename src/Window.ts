@@ -1,10 +1,10 @@
-import { BrowserWindow, ipcMain, nativeTheme, systemPreferences } from "electron"
+import { BrowserWindow, ipcMain, systemPreferences } from "electron"
 import * as path from "path"
 
 export class Window {
     win: BrowserWindow
 
-    constructor(width: number, height: number, devTools: boolean, theme: string) {
+    constructor(width: number, height: number, devTools: boolean, theme: 'dark' | 'light') {
         this.win = new BrowserWindow({
             width: width,
             height: height,

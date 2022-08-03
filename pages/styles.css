@@ -33,6 +33,7 @@ body {
     width: 100%;
     height: 2px;
     background-color: var(--primary-color);
+    /* background-color: var(--loading-blue); */
 }
 
 #tabBar {
@@ -52,6 +53,7 @@ body {
     
     /* Make window draggable from the title bar */
     -webkit-user-select: none;
+    user-select: none;
     -webkit-app-region: drag;
 }
 
@@ -104,6 +106,7 @@ body {
     color: var(--text-color);
     
     -webkit-user-select: none;
+    user-select: none;
     -webkit-app-region: no-drag;
     
     font-size: 11pt;
@@ -117,6 +120,7 @@ body {
     text-align: left;
     
     -webkit-user-select: none;
+    user-select: none;
 }
 
 #searchBar::placeholder {
@@ -174,11 +178,9 @@ body {
     margin-left: 75px;
 }
 
-#forwardButton {
-}
+/* #forwardButton {} */
 
-#refreshButton {
-}
+/* #refreshButton {} */
 
 #settingsButton {
     margin-right: 5px;

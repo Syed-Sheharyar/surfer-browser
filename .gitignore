@@ -1,5 +1,6 @@
 node_modules
 dist
+bin
 .DS_Store
 Surfer-darwin-x64
 Surfer-darwin-arm64
@@ -7,3 +8,9 @@ Surfer-linux-arm64
 Surfer-linux-armv7l
 Surfer-linux-x64
 Surfer-mas-x64
+Surfer-darwin-x64.zip
+Surfer-darwin-arm64.zip
+Surfer-linux-arm64.zip
+Surfer-linux-armv7l.zip
+Surfer-linux-x64.zip
+Surfer-mas-x64.zip
