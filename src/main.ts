@@ -40,7 +40,7 @@ function setTheme(theme: 'dark' | 'light') {
     win.setTheme(theme)
 }
 
-let theme: 'dark' | 'light' = 'light'
+let theme: 'dark' | 'light' = 'dark'
 
 function createWindow() {
     app.setName('Surfer')
@@ -67,6 +67,10 @@ function createWindow() {
     })
 
     setTheme(theme)
+
+    win.win.on('ready-to-show', () => {
+        win.win.setBackgroundColor(theme === 'dark' ? '#000000' : '#FFFFFF')
+    })
 }
 
 app.on("ready", () => {
