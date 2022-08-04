@@ -14,8 +14,10 @@ declare global {
 let win: Window
 let view: View
 
-function setUserAgent(view: BrowserView): void {
-    const userAgent = view.webContents.getUserAgent()
+function setUserAgent(): void {
+    let v = new BrowserView
+    const userAgent = v.webContents.getUserAgent()
+    v = null
 
     let surferVersion = userAgent.substring(userAgent.indexOf('Surfer/'))
     surferVersion = surferVersion.substring(0, surferVersion.indexOf(' '))
@@ -24,64 +26,47 @@ function setUserAgent(view: BrowserView): void {
     electronAgent = electronAgent.substring(0, electronAgent.indexOf(' '))
     newUserAgent = newUserAgent.replace(' ' + electronAgent, '')
 
-    if (newUserAgent.length > 15) { // as of some new Electron version (19.0.6 i think?) the getUserAgent() method returns an empty string, and so the user agent would only include Surfer/0.1.0 agent and nothing else, which makes google load an old interface (or mobile interface for the search page idk)
-        app.userAgentFallback = newUserAgent
+    app.userAgentFallback = newUserAgent
+    if (newUserAgent.length > 15) { // some Electron versions have a bug which doesn't return a default user agent when calling webContents.getUserAgent()
     } else {
         app.userAgentFallback = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Surfer/0.1.0 Chrome/102.0.5005.167 Safari/537.36'
     }
 }
 
-function setTheme() {
-    // nativeTheme.themeSource = 'light'
-    nativeTheme.themeSource = 'dark'
-    
-    // win.setTheme('dark')
+let settingsDropdown: OverlayView = null
 
-    // const checkTime = () => {
-    //     const currentTime = new Date()
-    //     const hours = currentTime.getHours()
-    //     if (hours > 20 || hours < 5) {
-    //         nativeTheme.themeSource = 'dark'
-    //         win.setTheme('dark')
-    //         console.log('Setting the theme to dark')
-    //     } else {
-    //         nativeTheme.themeSource = 'light'
-    //         win.setTheme('light')
-    //         console.log('Setting the theme to light')
-    //     }
-    // }
-
-    // checkTime()
-    // setInterval(checkTime, 60000)
+function setTheme(theme: 'dark' | 'light') {
+    nativeTheme.themeSource = theme
+    win.setTheme(theme)
 }
+
+let theme: 'dark' | 'light' = 'light'
 
 function createWindow() {
     app.setName('Surfer')
 
-    win = new Window(800, 600, false, 'light')
+    setUserAgent()
+
+    win = new Window(800, 600, false, theme)
     view = new View(800, 600, 37, win.win)
 
-    setUserAgent(view.view)
+    settingsDropdown = new OverlayView(10, 35, 130, 116, '../pages/settings.html', win.win, view.view, theme)
 
-    // win = new Window(523, 745, false)
-    // view = new View(523, 745, 37, win.win)
-    
-    let settingsDropdown: OverlayView = null
-    
     ipcMain.on('toggleSettings', () => {
-        if (settingsDropdown == null) {
-            settingsDropdown = new OverlayView(660, 35, 130, 116, '../pages/settings.html', win.win, 'dark')
+        if (settingsDropdown.open) {
+            settingsDropdown.hide()
         } else {
-            settingsDropdown.destruct()
-            settingsDropdown = null
+            settingsDropdown.show()
         }
     })
 
-    ipcMain.on('toggleTheme', (_ev: Event, theme: string) => {
+    ipcMain.on('toggleTheme', (_ev: Event, t: 'dark' | 'light') => {
+        theme = t
         console.log('toggleTheme', theme)
+        setTheme(theme)
     })
 
-    setTheme()
+    setTheme(theme)
 }
 
 app.on("ready", () => {

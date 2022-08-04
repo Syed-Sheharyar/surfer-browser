@@ -8,8 +8,6 @@ export class Window {
         this.win = new BrowserWindow({
             width: width,
             height: height,
-            // x: 843,
-            // y: 0,
             minWidth: 523,
             minHeight: 350,
             title: "Surfer",
@@ -49,9 +47,6 @@ export class Window {
         } else {
             this.win.webContents.send('removeLeftMargin')
         }
-
-        // this.win.webContents.send('setTheme', 'light')
-        // this.win.webContents.send('setTheme', 'dark')
     }
 
     setTheme(theme: 'dark' | 'light'): void {

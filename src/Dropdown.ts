@@ -4,21 +4,39 @@ import * as path from "path"
 export class OverlayView {
     view: BrowserView
     win: BrowserWindow
-    constructor(x: number, y: number, width: number, height: number, fileName: string, win: BrowserWindow, theme: 'dark' | 'light') {
+    v: BrowserView
+    open: boolean
+
+    constructor(xMargin: number, y: number, width: number, height: number, fileName: string, win: BrowserWindow, v: BrowserView, theme: 'dark' | 'light') {
         this.view = new BrowserView({webPreferences: {preload: path.join(__dirname, "settingsPreload.js")}})
         this.win = win
+        this.v = v
+
         this.win.addBrowserView(this.view)
-        this.view.setBounds({ x: x, y: y, width: width, height: height })
+        this.view.setBounds({ x: this.win.getBounds().width - xMargin - width, y: y, width: width, height: height })
         this.view.webContents.send('setTheme', theme)
+
+        this.hide()
+        // this.open = true
+
         // this.view.webContents.openDevTools()
         
         this.view.webContents.loadFile(path.join(__dirname, fileName))
         
+        this.win.on('resize', () => {
+            this.view.setBounds({ x: this.win.getBounds().width - xMargin - width, y: y, width: width, height: height })
+        })
     }
 
-    destruct(): void {
-        this.win.removeBrowserView(this.view)
-        this.view = null
-        this.win = null
+    show(): void {
+        this.open = true
+        this.win.setTopBrowserView(this.view)
+        this.view.webContents.send('show')
+    }
+    
+    hide(): void {
+        this.open = false
+        this.win.setTopBrowserView(this.v)
+        this.view.webContents.send('hide')
     }
 }

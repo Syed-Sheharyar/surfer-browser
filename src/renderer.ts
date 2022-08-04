@@ -7,8 +7,8 @@ const progressBar = document.getElementById('progressBar')
 const titleBar = document.getElementById('tabBar')
 const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searchBar')
 
-// document.documentElement.setAttribute('data-theme', 'light')
-document.documentElement.setAttribute('data-theme', 'dark')
+document.documentElement.setAttribute('data-theme', 'light')
+// document.documentElement.setAttribute('data-theme', 'dark')
 
 window.api.handleSetTheme((_ev: Event, theme: 'dark' | 'light') => {
     document.documentElement.setAttribute('data-theme', theme)
