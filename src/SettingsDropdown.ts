@@ -1,7 +1,7 @@
-import { BrowserView, BrowserWindow } from "electron"
+import { BrowserView, BrowserWindow, ipcMain } from "electron"
 import * as path from "path"
 
-export class OverlayView {
+export class SettingsDropdown {
     view: BrowserView
     win: BrowserWindow
     v: BrowserView

@@ -2,7 +2,7 @@ import { app, BrowserView, ipcMain, nativeTheme } from "electron"
 
 import { Window } from "./Window"
 import { View } from "./View"
-import { OverlayView } from "./Dropdown"
+import { SettingsDropdown } from "./SettingsDropdown"
 
 declare global {
     interface Window {
@@ -33,14 +33,14 @@ function setUserAgent(): void {
     }
 }
 
-let settingsDropdown: OverlayView = null
+let settingsDropdown: SettingsDropdown = null
 
 function setTheme(theme: 'dark' | 'light') {
     nativeTheme.themeSource = theme
     win.setTheme(theme)
 }
 
-let theme: 'dark' | 'light' = 'dark'
+let theme: 'dark' | 'light' = 'light'
 
 function createWindow() {
     app.setName('Surfer')
@@ -50,19 +50,21 @@ function createWindow() {
     win = new Window(800, 600, false, theme)
     view = new View(800, 600, 37, win.win)
 
-    settingsDropdown = new OverlayView(10, 35, 130, 116, '../pages/settings.html', win.win, view.view, theme)
+    setTimeout(() => {
+        settingsDropdown = new SettingsDropdown(10, 42, 130, 116, '../pages/settings.html', win.win, view.view, theme)
 
-    ipcMain.on('toggleSettings', () => {
-        if (settingsDropdown.open) {
-            settingsDropdown.hide()
-        } else {
-            settingsDropdown.show()
-        }
-    })
+        ipcMain.on('toggleSettings', () => {
+            if (settingsDropdown.open) {
+                settingsDropdown.hide()
+            } else {
+                settingsDropdown.show()
+            }
+        })
+
+    }, 500)
 
     ipcMain.on('toggleTheme', (_ev: Event, t: 'dark' | 'light') => {
         theme = t
-        console.log('toggleTheme', theme)
         setTheme(theme)
     })
 

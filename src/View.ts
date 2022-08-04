@@ -2,6 +2,8 @@ import { BrowserView, BrowserWindow, ipcMain, dialog } from "electron"
 
 export class View {
     view: BrowserView
+    homePage: boolean
+    homeCount: number
     constructor(width: number, height: number, tabHeight: number, win: BrowserWindow ) {
         this.view = new BrowserView({
             webPreferences: {
@@ -24,9 +26,7 @@ export class View {
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
         // this.view.webContents.openDevTools()
 
-        // this.view.webContents.loadFile(path.join(__dirname, "../pages/favorites.html"))
-        this.view.webContents.loadURL('https://google.com/')
-        let homePage = true
+        this.goHome()
         
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
             updateSearchBar(ev, url)
@@ -71,12 +71,15 @@ export class View {
         })
 
         this.view.webContents.on('did-finish-load', () => {
-            homePage = false
+            this.homeCount += 1
+            if (this.homeCount > 0) {
+                this.homePage = false
+            }
         })
 
         // this.view.webContents.on('did-navigate', () => {
         //     if (!this.view.webContents.canGoBack()) {
-        //         homePage = true
+        //         this.homePage = true
         //     }
         // })
 
@@ -110,8 +113,14 @@ export class View {
             this.view.webContents.reload()
         })
 
+        ipcMain.on('goHome', () => {
+            this.goHome()
+        })
+
         const updateSearchBar = (_ev: Event, url: string) => {
-            if (homePage) {
+            if (this.homePage) {
+                win.webContents.send('setSearchBar', '')
+                win.webContents.send('setSearchBarURL', '')
                 return
             }
             let text: string
@@ -146,5 +155,12 @@ export class View {
                 this.view.webContents.loadURL(`https://google.com/search?q=${query}`)
             }
         })
+    }
+
+    goHome(): void {
+        // this.view.webContents.loadFile(path.join(__dirname, "../pages/favorites.html"))
+        this.view.webContents.loadURL('https://google.com/')
+        this.homeCount = 0
+        this.homePage = true
     }
 }
