@@ -1,4 +1,6 @@
 import { BrowserView, BrowserWindow, ipcMain, dialog } from "electron"
+import * as path from "path"
+import { LoadingError } from "./LoadingError"
 
 export class View {
     view: BrowserView
@@ -18,12 +20,14 @@ export class View {
                 zoomFactor: 1.0,
                 navigateOnDragDrop: true,
                 scrollBounce: true,
+                preload: path.join(__dirname, "viewPreload.js"),
             }
         })
         win.addBrowserView(this.view)
         this.view.setBounds({ x: 0, y: tabHeight, width: width, height: height - tabHeight })
         this.view.setAutoResize({width: true, height: true})
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
+
         // this.view.webContents.openDevTools()
 
         this.goHome()
@@ -96,9 +100,11 @@ export class View {
             win.webContents.send('startedLoading')
         })
 
-        this.view.webContents.on('did-fail-load', () => {
-            console.log('failed loading the page!')
+        this.view.webContents.on('did-fail-load', (_ev: Event, code: number, desc: string, url: string) => {
             doneLoading()
+            LoadingError(code, desc, url, () => {
+                // pass
+            })
         })
 
         ipcMain.on('goBack', () => {

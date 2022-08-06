@@ -52,7 +52,7 @@ function createWindow() {
 
     setTimeout(() => {
         settingsDropdown = new SettingsDropdown(10, 42, 130, 116, '../pages/settings.html', win.win, view.view, theme)
-
+        
         ipcMain.on('toggleSettings', () => {
             if (settingsDropdown.open) {
                 settingsDropdown.hide()
@@ -60,19 +60,20 @@ function createWindow() {
                 settingsDropdown.show()
             }
         })
-
-    }, 500)
-
+        
+    }, 1000)
+    
     ipcMain.on('toggleTheme', (_ev: Event, t: 'dark' | 'light') => {
         theme = t
         setTheme(theme)
     })
-
+    
     setTheme(theme)
-
+    
     win.win.on('ready-to-show', () => {
         win.win.setBackgroundColor(theme === 'dark' ? '#000000' : '#FFFFFF')
     })
+    
 }
 
 app.on("ready", () => {
