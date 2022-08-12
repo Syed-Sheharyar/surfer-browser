@@ -51,7 +51,7 @@ function createWindow() {
     view = new View(800, 600, 37, win.win)
 
     setTimeout(() => {
-        settingsDropdown = new SettingsDropdown(10, 42, 130, 116, '../pages/settings.html', win.win, view.view, theme)
+        settingsDropdown = new SettingsDropdown(10, 47, 130, 116, '../pages/settings.html', win.win, view.view, theme)
         
         ipcMain.on('toggleSettings', () => {
             if (settingsDropdown.open) {

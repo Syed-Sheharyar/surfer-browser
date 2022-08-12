@@ -34,6 +34,10 @@ export class Window {
             ipcMain.emit('closeSettings')
         })
 
+        ipcMain.on('closedSettings', () => {
+            this.win.webContents.send('windowBlurred')
+        })
+
         ipcMain.on('titleBarDoubleClicked', () => {
             const doubleClickAction = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string')
             if (doubleClickAction === 'Minimize') {

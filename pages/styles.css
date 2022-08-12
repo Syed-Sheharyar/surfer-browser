@@ -161,6 +161,10 @@ body {
     border: 2px solid var(--secondary-color);
 }
 
+.barButton:focus {
+    outline: none;
+}
+
 .barButton:disabled {
     color: var(--secondary-color);
 }

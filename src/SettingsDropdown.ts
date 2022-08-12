@@ -38,6 +38,9 @@ export class SettingsDropdown {
     }
     
     hide(): void {
+        if (this.open) {
+            ipcMain.emit('closedSettings')
+        }
         this.open = false
         this.win.setTopBrowserView(this.v)
         this.view.webContents.send('hide')

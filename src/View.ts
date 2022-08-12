@@ -40,6 +40,9 @@ export class View {
             updateSearchBar(ev, url)
         })
 
+        ipcMain.on('closedSettings', () => {
+            this.view.webContents.focus()
+        })
         
         this.view.webContents.on('will-prevent-unload', (event) => {
             const choice = dialog.showMessageBoxSync({
