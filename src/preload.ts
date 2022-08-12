@@ -18,6 +18,11 @@ contextBridge.exposeInMainWorld('api', {
     handleCanGoBack: (callback: () => void) => ipcRenderer.on('canGoBack', callback),
     handleCanGoForward: (callback: () => void) => ipcRenderer.on('canGoForward', callback),
 
+    handleWindowFocusedOrBlurred: (callback: () => void) => {
+        ipcRenderer.on('windowFocused', callback)
+        ipcRenderer.on('windowBlurred', callback)
+    },
+
     searchBarQueryEntered: (query: string) => ipcRenderer.send('searchBarQueryEntered', query),
 
     titleBarDoubleClicked: () => ipcRenderer.send('titleBarDoubleClicked'),

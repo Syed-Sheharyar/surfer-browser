@@ -16,7 +16,7 @@ settingsButton.addEventListener('mouseout', () => {
     canHideSettings = true
 })
 
-window.addEventListener('click', () => {
+window.addEventListener('mousedown', () => {
     if (canHideSettings) {
         window.api.titleBarClicked()
     }
@@ -76,6 +76,11 @@ searchBar.addEventListener('keyup' , (event) => {
         event.preventDefault()
         searchBar.blur()
     }
+})
+
+window.api.handleWindowFocusedOrBlurred(() => {
+    console.log('focused')
+    searchBar.blur()
 })
 
 let searchBarFocused = searchBar === document.activeElement

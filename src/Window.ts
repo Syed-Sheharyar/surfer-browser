@@ -25,7 +25,12 @@ export class Window {
             this.win.webContents.openDevTools({mode: 'undocked'})
         }
 
+        this.win.on('focus', () => {
+            this.win.webContents.send('windowFocused')
+        })
+        
         this.win.on('blur', () => {
+            this.win.webContents.send('windowBlurred')
             ipcMain.emit('closeSettings')
         })
 
