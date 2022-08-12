@@ -83,8 +83,6 @@ window.api.handleWindowFocusedOrBlurred(() => {
     searchBar.blur()
 })
 
-// ahahhah
-
 let searchBarFocused = searchBar === document.activeElement
 searchBar.addEventListener('focus', () => {
     searchBarFocused = true
