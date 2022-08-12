@@ -7,6 +7,21 @@ const progressBar = document.getElementById('progressBar')
 const titleBar = document.getElementById('tabBar')
 const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searchBar')
 
+let canHideSettings = false
+
+settingsButton.addEventListener('mouseenter', () => {
+    canHideSettings = false
+})
+settingsButton.addEventListener('mouseout', () => {
+    canHideSettings = true
+})
+
+window.addEventListener('click', () => {
+    if (canHideSettings) {
+        window.api.titleBarClicked()
+    }
+})
+
 document.documentElement.setAttribute('data-theme', 'light')
 // document.documentElement.setAttribute('data-theme', 'dark')
 

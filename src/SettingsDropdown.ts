@@ -6,7 +6,6 @@ export class SettingsDropdown {
     win: BrowserWindow
     v: BrowserView
     open: boolean
-
     constructor(xMargin: number, y: number, width: number, height: number, fileName: string, win: BrowserWindow, v: BrowserView, theme: 'dark' | 'light') {
         this.view = new BrowserView({webPreferences: {preload: path.join(__dirname, "settingsPreload.js")}})
         this.win = win
@@ -18,6 +17,10 @@ export class SettingsDropdown {
 
         this.hide()
         // this.open = true
+
+        ipcMain.on('closeSettings', () => {
+            this.hide()
+        })
 
         // this.view.webContents.openDevTools()
         

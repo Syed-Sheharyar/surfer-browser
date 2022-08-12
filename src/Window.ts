@@ -25,6 +25,10 @@ export class Window {
             this.win.webContents.openDevTools({mode: 'undocked'})
         }
 
+        this.win.on('blur', () => {
+            ipcMain.emit('closeSettings')
+        })
+
         ipcMain.on('titleBarDoubleClicked', () => {
             const doubleClickAction = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string')
             if (doubleClickAction === 'Minimize') {

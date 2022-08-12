@@ -2,6 +2,8 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
 
 contextBridge.exposeInMainWorld('api', {
 
+    titleBarClicked: () => ipcRenderer.send('closeSettings'),
+
     handleRemoveLeftMargin: (callback: () => void) => ipcRenderer.on('removeLeftMargin', callback),
     handleRestoreLeftMargin: (callback: () => void) => ipcRenderer.on('restoreLeftMargin', callback),
 

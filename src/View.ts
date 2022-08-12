@@ -31,6 +31,10 @@ export class View {
         // this.view.webContents.openDevTools()
 
         this.goHome()
+
+        this.view.webContents.on('focus', () => {
+            ipcMain.emit('closeSettings')
+        })
         
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
             updateSearchBar(ev, url)
