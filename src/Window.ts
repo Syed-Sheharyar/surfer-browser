@@ -8,9 +8,10 @@ export class Window {
         this.win = new BrowserWindow({
             width: width,
             height: height,
-            minWidth: 523,
+            minWidth: 518,
             minHeight: 350,
             title: "Surfer",
+            center: true,
             webPreferences: {
                 preload: path.join(__dirname, "preload.js"),
             },

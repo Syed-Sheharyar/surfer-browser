@@ -14,6 +14,12 @@
   "main": "./dist/main.js",
   "author": "Enrike Churin",
   "license": "MIT",
+  "build": {
+    "appId": "com.surfer.Surfer",
+    "mac": {
+      "category": "your.app.category.type"
+    }
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
