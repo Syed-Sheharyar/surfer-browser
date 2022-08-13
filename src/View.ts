@@ -43,6 +43,10 @@ export class View {
         ipcMain.on('closedSettings', () => {
             this.view.webContents.focus()
         })
+
+        ipcMain.on('windowFocused', () => {
+            this.view.webContents.focus()
+        })
         
         this.view.webContents.on('will-prevent-unload', (event) => {
             const choice = dialog.showMessageBoxSync({

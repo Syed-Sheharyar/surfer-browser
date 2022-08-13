@@ -27,6 +27,7 @@ export class Window {
 
         this.win.on('focus', () => {
             this.win.webContents.send('windowFocused')
+            ipcMain.emit('windowFocused')
         })
         
         this.win.on('blur', () => {

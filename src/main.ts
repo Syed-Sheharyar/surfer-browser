@@ -48,7 +48,7 @@ function createWindow() {
     setUserAgent()
 
     win = new Window(800, 600, false, theme)
-    view = new View(800, 600, 37*2, win.win)
+    view = new View(800, 600, 37, win.win)
 
     setTimeout(() => {
         settingsDropdown = new SettingsDropdown(10, 47, 130, 116, '../pages/settings.html', win.win, view.view, theme)
