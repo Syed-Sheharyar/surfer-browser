@@ -29,14 +29,13 @@ body {
 }
 
 #progressBar {
-    display: block;
-    width: 100%;
+    width: 100vw;
     height: 2px;
     background-color: var(--primary-color);
     /* background-color: var(--loading-blue); */
 }
 
-#tabBar {
+#titleBar {
     /* Set bar's dimensions */
     width: 100vw;
     height: 35px;
@@ -194,4 +193,84 @@ body {
     padding-bottom: 5px;
     padding-right: 5px;
     padding-left: 3px;
+}
+
+
+#tabBar {
+    width: 100vw;
+    height: 30px;
+    min-height: 30px;
+
+    background-color: var(--background-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow-x: scroll;
+}
+
+.tab > div {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 1;
+    flex-direction: row;
+}
+
+.tabLeftPart {
+    justify-content: flex-start;
+}
+
+.tabCenterPart {
+    flex-grow: 1;
+    flex-shrink: 1;
+    justify-content: center;
+
+    overflow-x: scroll;
+    white-space: nowrap; /* Don't forget this one */
+    text-overflow: ellipsis;
+}
+
+.tabRightPart {
+    margin-left: 10px;
+    flex-basis: 1em;
+    justify-content: flex-end;
+}
+
+.closeButton:hover {
+    color: var(--text-color);
+}
+
+.tab {
+    width: 100%;
+    min-width: 100px;
+    max-width: 200px;
+    height: 30px;
+    min-height: 30px;
+
+    border-right: 2px solid var(--primary-color);
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    font-size: 11.5pt;
+
+    color: var(--tertiary-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    user-select: none;
+}
+
+.tab:last-of-type {
+    border: none;
+}
+
+#spacingBar {
+    width: 100vw;
+    height: 2px;
+    background-color: var(--primary-color);
 }
