@@ -4,7 +4,7 @@ const refreshButton = <HTMLButtonElement>document.getElementById('refreshButton'
 const settingsButton = <HTMLButtonElement>document.getElementById('settingsButton')
 const searchBar = <HTMLInputElement>document.getElementById('searchBar')
 const progressBar = document.getElementById('progressBar')
-const titleBar = document.getElementById('tabBar')
+const titleBar = document.getElementById('titleBar')
 const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searchBar')
 
 let canHideSettings = false
