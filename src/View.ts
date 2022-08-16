@@ -120,14 +120,17 @@ export class View {
 
         ipcMain.on('goBack', () => {
             this.view.webContents.goBack()
+            this.view.webContents.focus()
         })
 
         ipcMain.on('goForward', () => {
             this.view.webContents.goForward()
+            this.view.webContents.focus()
         })
 
         ipcMain.on('refreshPage', () => {
             this.view.webContents.reload()
+            this.view.webContents.focus()
         })
 
         ipcMain.on('goHome', () => {
@@ -168,11 +171,12 @@ export class View {
                 this.view.webContents.loadURL(query)
             } else if (query.includes('://')) {
                 this.view.webContents.loadURL(query)
-            } else if (query.includes('/')) {
+            } else if (query.includes('/') || query.includes('.')) {
                 this.view.webContents.loadURL('http://' + query)
             } else {
                 this.view.webContents.loadURL(`https://google.com/search?q=${query}`)
             }
+            this.view.webContents.focus()
         })
     }
 
@@ -181,5 +185,6 @@ export class View {
         this.view.webContents.loadURL('https://google.com/')
         this.homeCount = 0
         this.homePage = true
+        this.view.webContents.focus()
     }
 }

@@ -84,7 +84,6 @@ searchBar.addEventListener('keyup' , (event) => {
 })
 
 window.api.handleWindowFocusedOrBlurred(() => {
-    console.log('focused')
     searchBar.blur()
 })
 

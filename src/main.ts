@@ -72,10 +72,10 @@ function setUserAgent(): void {
     electronAgent = electronAgent.substring(0, electronAgent.indexOf(' '))
     newUserAgent = newUserAgent.replace(' ' + electronAgent, '')
 
-    app.userAgentFallback = newUserAgent
     if (newUserAgent.length > 15) { // some Electron versions have a bug which doesn't return a default user agent when calling webContents.getUserAgent()
+        app.userAgentFallback = newUserAgent
     } else {
-        app.userAgentFallback = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Surfer/0.1.0 Chrome/102.0.5005.167 Safari/537.36'
+        // app.userAgentFallback = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Surfer/0.1.0 Chrome/102.0.5005.167 Safari/537.36'
     }
 }
 
@@ -99,6 +99,7 @@ function createWindow() {
     // Create the settings dropdown 1 second after creating the BrowserView to make sure
     // the page is loaded and the dropdown wouldn't be visible in the process of its creation. 
     // (It's unlikely I can do anything about it considering the way it's implemented right now.)
+    // But it's fine though... surely...
 
     setTimeout(() => {
         settingsDropdown = new SettingsDropdown(10, 47, 127, 116, '../pages/settings.html', win.win, view.view, theme)
