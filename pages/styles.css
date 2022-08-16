@@ -1,20 +1,103 @@
-:root {
+/* :root {
     --text-color: #000000;
     --background-color: #ffffff;
     --primary-color: #dadada;
     --secondary-color: #c8c8c8;
     --tertiary-color: #7e7e7e;
-    --loading-blue: #7db6e8;
+    --loading-color: #7db6e8;
+} */
+
+/* Experimenting with other color themes, no theme style switcher functionality implemented, though */
+
+/* Pink */
+
+/* :root {
+    --text-color: #000000;
+    --background-color: #f9b9d7;
+    --primary-color: #df96b8;
+    --secondary-color: #c57d9e;
+    --tertiary-color: #976d81;
+    --loading-color: #8d4969;
+} */
+
+/* Cyan */
+
+/* :root {
+    --text-color: #000000;
+    --background-color: #baeef9;
+    --primary-color: #95d2de;
+    --secondary-color: #7db8c4;
+    --tertiary-color: #6c8f96;
+    --loading-color: #49828d;
+} */
+
+/* Blue */
+
+:root {
+    --text-color: #000000;
+    --background-color: #bad6f9;
+    --primary-color: #96b7df;
+    --secondary-color: #7d9dc5;
+    --tertiary-color: #6d8097;
+    --loading-color: #49688d;
 }
 
+/* Green */
+
+/* :root {
+    --text-color: #000000;
+    --background-color: #c8f9b9;
+    --primary-color: #a7df96;
+    --secondary-color: #8ec57d;
+    --tertiary-color: #77976d;
+    --loading-color: #598d49;
+} */
+
+/* Yellow */
+
+/* :root {
+    --text-color: #000000;
+    --background-color: #f9f9b9;
+    --primary-color: #dfdf96;
+    --secondary-color: #c5c57d;
+    --tertiary-color: #97976d;
+    --loading-color: #8d8d49;
+} */
+
+/* Gray */
+
+/* :root {
+    --text-color: #ffffff;
+    --background-color: #464646;
+    --primary-color: #606060;
+    --secondary-color: #727272;
+    --tertiary-color: #989898;
+    --loading-color: #7db6e8;
+} */
+
+/* Dark Theme */
+
+/* Gray */
+
 [data-theme="dark"] {
+    --text-color: #ffffff;
+    --background-color: #464646;
+    --primary-color: #606060;
+    --secondary-color: #727272;
+    --tertiary-color: #989898;
+    --loading-color: #7db6e8;
+}
+
+/* Black */
+
+/* [data-theme="dark"] {
     --text-color: #ffffff;
     --background-color: #000000;
     --primary-color: #262626;
     --secondary-color: #383838;
     --tertiary-color: #828282;
-    --loading-blue: #7db6e8;
-}
+    --loading-color: #7db6e8;
+} */
 
 body {
     color: var(--text-color);
@@ -32,7 +115,7 @@ body {
     width: 100vw;
     height: 2px;
     background-color: var(--primary-color);
-    /* background-color: var(--loading-blue); */
+    /* background-color: var(--loading-color); */
 }
 
 #titleBar {
@@ -112,8 +195,10 @@ body {
 }
 
 #searchBar:focus {
+    /* Should be an option in appearance settings. Makes the searchbar darker when focused (typed on). */
     /* background-color: var(--secondary-color);
     border: 2px solid var(--secondary-color); */
+
     outline: none;
     
     text-align: left;

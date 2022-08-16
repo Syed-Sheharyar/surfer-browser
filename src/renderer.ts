@@ -30,7 +30,7 @@ window.api.handleSetTheme((_ev: Event, theme: 'dark' | 'light') => {
 })
 
 window.api.handleStartedLoading(() => {
-    progressBar.style.backgroundColor = 'var(--loading-blue)'
+    progressBar.style.backgroundColor = 'var(--loading-color)'
 })
 
 window.api.handleFinishedLoading(() => {
@@ -53,8 +53,13 @@ forwardButton.addEventListener('click', () => {
     window.api.forwardButtonPressed()
 })
 
+let canRefresh = true
 refreshButton.addEventListener('click', () => {
-    window.api.refreshButtonPressed()
+    if (canRefresh) {
+        window.api.refreshButtonPressed()
+        canRefresh = false
+        setTimeout(() => canRefresh = true, 400)
+    }
 })
 
 settingsButton.addEventListener('click', () => {

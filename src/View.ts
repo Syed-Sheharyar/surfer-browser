@@ -166,7 +166,9 @@ export class View {
         ipcMain.on('searchBarQueryEntered', (_event, query) => {
             if (query.indexOf('https://') === 0 || query.indexOf('http://') === 0) {
                 this.view.webContents.loadURL(query)
-            } else if (query.includes('.') || query.includes('/')) {
+            } else if (query.includes('://')) {
+                this.view.webContents.loadURL(query)
+            } else if (query.includes('/')) {
                 this.view.webContents.loadURL('http://' + query)
             } else {
                 this.view.webContents.loadURL(`https://google.com/search?q=${query}`)
