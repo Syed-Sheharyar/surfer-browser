@@ -39,6 +39,10 @@ export class Window {
             this.win.webContents.send('windowBlurred')
         })
 
+        ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
+            this.win.webContents.send('lockButtonPressed', isOn)
+        })
+
         ipcMain.on('titleBarDoubleClicked', () => {
             const doubleClickAction = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string')
             if (doubleClickAction === 'Minimize') {

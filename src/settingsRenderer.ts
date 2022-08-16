@@ -44,6 +44,7 @@ window.api.onSetTheme((_ev: Event, theme: 'dark' | 'light') => {
 
 const onLockToggleClick = () => {
     lockToggleState = !lockToggleState
+    window.api.lockButtonPressed(lockToggleState)
     if (lockToggleState) {
         lockToggle.className = 'rowItem checkbox checked'
         // themeToggle.innerHTML = '&#10003'

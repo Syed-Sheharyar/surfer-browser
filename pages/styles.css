@@ -44,14 +44,14 @@
 
 /* Mint */
 
-:root {
+/* :root {
     --text-color: #000000;
     --background-color: #b9f9c3;
     --primary-color: #96dfa1;
     --secondary-color: #7dc588;
     --tertiary-color: #6d9773;
     --loading-color: #498d53;
-}
+} */
 
 /* Lime */
 
@@ -66,14 +66,14 @@
 
 /* Banana */
 
-/* :root {
+:root {
     --text-color: #000000;
     --background-color: #f9f9b9;
     --primary-color: #dfdf96;
     --secondary-color: #c5c57d;
     --tertiary-color: #97976d;
     --loading-color: #8d8d49;
-} */
+}
 
 /* Gray */
 
@@ -116,7 +116,7 @@ body {
     margin: 0;
     padding: 0;
     
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 12pt;
     
     color: var(--text-color)
@@ -291,9 +291,13 @@ body {
     padding-left: 3px;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
 
 #tabBar {
     width: 100vw;
+    min-width: 100vw;
     height: 30px;
     min-height: 30px;
 
@@ -306,44 +310,13 @@ body {
     overflow-x: scroll;
 }
 
-.tab > div {
-    display: flex;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 1;
-    flex-direction: row;
-}
-
-.tabLeftPart {
-    justify-content: flex-start;
-}
-
-.tabCenterPart {
-    flex-grow: 1;
-    flex-shrink: 1;
-    justify-content: center;
-
-    overflow-x: scroll;
-    white-space: nowrap; /* Don't forget this one */
-    text-overflow: ellipsis;
-}
-
-.tabRightPart {
-    margin-left: 10px;
-    flex-basis: 1em;
-    justify-content: flex-end;
-}
-
-.closeButton:hover {
-    color: var(--text-color);
-}
-
 .tab {
     width: 100%;
     min-width: 100px;
-    max-width: 200px;
     height: 30px;
     min-height: 30px;
+
+    flex: 1 1 1;
 
     border-right: 2px solid var(--primary-color);
 
@@ -363,6 +336,42 @@ body {
 
 .tab:last-of-type {
     border: none;
+}
+
+.tab:nth-of-type(3) {
+    color: var(--text-color);
+}
+
+.tabTitle {
+    width: 100%;
+
+    text-align: center;
+
+    /* overflow-x: scroll; */
+    overflow-x: hidden;
+
+    white-space: nowrap; /* Don't forget this one */
+    text-overflow: ellipsis;
+}
+
+.closeButtonCont {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    height: 100%;
+    text-align: right;
+    min-width: 1.1em;
+}
+
+.closeButton {
+    width: 1em;
+    height: 1em;
+    color: var(--tertiary-color);
+}
+
+.closeButton:hover {
+    color: var(--text-color);
 }
 
 #spacingBar {

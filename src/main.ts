@@ -1,59 +1,13 @@
-import { app, BrowserView, ipcMain, IpcRendererEvent, nativeTheme } from "electron"
+import { app, BrowserView, ipcMain, nativeTheme } from "electron"
 
 import { Window } from "./Window"
 import { View } from "./View"
 import { SettingsDropdown } from "./SettingsDropdown"
 
-// Renderer preload API declaration. Enables autocomplete and Typescript safety. 
-// You usually would want to keep it collapsed.
 declare global {
     interface Window {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        api?: {
-
-            // Browser UI
-
-            titleBarClicked: () => void,
-
-            handleRemoveLeftMargin: (callback: () => void) => void,
-            handleRestoreLeftMargin: (callback: () => void) => void,
-
-            handleSetSearchBar: (callback: (_ev: Event, text: string) => void) => void,
-            handleSetSearchBarURL: (callback: (_ev: Event, text: string) => void) => void,
-
-            backButtonPressed: () => void,
-            forwardButtonPressed: () => void,
-            refreshButtonPressed: () => void,
-            lockButtonPressed: () => void,
-
-            handleCanGoBack: (callback: (_ev: IpcRendererEvent, canGoBack: boolean) => void) => void,
-            handleCanGoForward: (callback: (_ev: IpcRendererEvent, canGoForward: boolean) => void) => void,
-
-            handleWindowFocusedOrBlurred: (callback: () => void) => void,
-
-            searchBarQueryEntered: (query: string) => void,
-
-            titleBarDoubleClicked: () => void,
-
-            toggleSettings: () => void,
-
-            handleSetTheme: (callback: (_ev: IpcRendererEvent, theme: 'dark' | 'light') => void) => void,
-
-            handleStartedLoading: (callback: () => void) => void,
-
-            handleFinishedLoading: (callback: () => void) => void,
-
-            // Settings
-
-            goHome: () => void,
-            openSettings: () => void,
-
-            onSetTheme: (callback: (_ev: IpcRendererEvent, theme: 'dark' | 'light') => void) => void,
-            toggleTheme: (theme: 'dark' | 'light') => void,
-
-            onShow: (callback: () => void) => void,
-            onHide: (callback: () => void) => void,
-        }
+        api?: any
     }
 }
 
@@ -94,7 +48,7 @@ function createWindow() {
     setUserAgent()
 
     win = new Window(800, 600, false, theme)
-    view = new View(800, 600, 37, win.win)
+    view = new View(800, 600, 37*2-5, win.win)
 
     // Create the settings dropdown 1 second after creating the BrowserView to make sure
     // the page is loaded and the dropdown wouldn't be visible in the process of its creation. 
@@ -102,7 +56,8 @@ function createWindow() {
     // But it's fine though... surely...
 
     setTimeout(() => {
-        settingsDropdown = new SettingsDropdown(10, 47, 127, 116, '../pages/settings.html', win.win, view.view, theme)
+        // settingsDropdown = new SettingsDropdown(10, 47, 127, 116, '../pages/settings.html', win.win, view.view, theme)
+        settingsDropdown = new SettingsDropdown(10, 10, 127, 116, '../pages/settings.html', win.win, view.view, theme)
         
         ipcMain.on('toggleSettings', () => {
             if (settingsDropdown.open) {

@@ -27,6 +27,15 @@ export class View {
         this.view.setBounds({ x: 0, y: tabHeight, width: width, height: height - tabHeight })
         this.view.setAutoResize({width: true, height: true})
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
+        
+        ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
+            const bounds = win.getBounds()
+            if (isOn) {
+                this.view.setBounds({ x: 0, y: 37, width: bounds.width, height: bounds.height - 37 })
+            } else {
+                this.view.setBounds({ x: 0, y: tabHeight, width: bounds.width, height: bounds.height - tabHeight })
+            }
+        })
 
         // this.view.webContents.openDevTools()
 

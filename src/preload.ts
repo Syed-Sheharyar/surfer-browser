@@ -13,7 +13,8 @@ contextBridge.exposeInMainWorld('api', {
     backButtonPressed: () => ipcRenderer.send('goBack'),
     forwardButtonPressed: () => ipcRenderer.send('goForward'),
     refreshButtonPressed: () => ipcRenderer.send('refreshPage'),
-    lockButtonPressed: () => ipcRenderer.send('lockButtonPressed'),
+
+    handleLockButtonPressed: (callback: (_ev: IpcRendererEvent, isOn: boolean) => void) => ipcRenderer.on('lockButtonPressed', callback),
 
     handleCanGoBack: (callback: () => void) => ipcRenderer.on('canGoBack', callback),
     handleCanGoForward: (callback: () => void) => ipcRenderer.on('canGoForward', callback),

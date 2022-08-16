@@ -6,20 +6,27 @@ export class SettingsDropdown {
     win: BrowserWindow
     v: BrowserView
     open: boolean
-    constructor(xMargin: number, y: number, width: number, height: number, fileName: string, win: BrowserWindow, v: BrowserView, theme: 'dark' | 'light') {
+    constructor(xMargin: number, yMargin: number, width: number, height: number, fileName: string, win: BrowserWindow, v: BrowserView, theme: 'dark' | 'light') {
         this.view = new BrowserView({webPreferences: {preload: path.join(__dirname, "settingsPreload.js")}})
         this.win = win
         this.v = v
 
+        let y = this.v.getBounds().y + yMargin
+
         this.win.addBrowserView(this.view)
         this.view.setBounds({ x: this.win.getBounds().width - xMargin - width, y: y, width: width, height: height })
         this.view.webContents.send('setTheme', theme)
-
+        
         this.hide()
         // this.open = true
-
+        
         ipcMain.on('closeSettings', () => {
             this.hide()
+        })
+        
+        ipcMain.on('lockButtonPressed', () => {
+            y = this.v.getBounds().y + yMargin
+            this.view.setBounds({ x: this.win.getBounds().width - xMargin - width, y: y, width: width, height: height })
         })
 
         // this.view.webContents.openDevTools()

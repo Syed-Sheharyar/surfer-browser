@@ -7,6 +7,9 @@ const progressBar = document.getElementById('progressBar')
 const titleBar = document.getElementById('titleBar')
 const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searchBar')
 
+const tabBar = document.getElementById('tabBar')
+const spacingBar = document.getElementById('spacingBar')
+
 let canHideSettings = false
 
 settingsButton.addEventListener('mouseenter', () => {
@@ -129,4 +132,15 @@ nonDoubleClickableElements.forEach(elm => {
 
 titleBar.addEventListener('dblclick', () => {
     if (canDoubleClickTitleBar) window.api.titleBarDoubleClicked()
+})
+
+
+window.api.handleLockButtonPressed((_ev: Event, isOn: boolean) => {
+    if (isOn) {
+        tabBar.style.visibility = 'hidden'
+        spacingBar.style.visibility = 'hidden'
+    } else {
+        tabBar.style.visibility = 'visible'
+        spacingBar.style.visibility = 'visible'
+    }
 })

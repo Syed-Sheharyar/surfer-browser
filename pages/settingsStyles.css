@@ -44,14 +44,14 @@
 
 /* Mint */
 
-:root {
+/* :root {
     --text-color: #000000;
     --background-color: #b9f9c3;
     --primary-color: #96dfa1;
     --secondary-color: #7dc588;
     --tertiary-color: #6d9773;
     --loading-color: #498d53;
-}
+} */
 
 /* Lime */
 
@@ -66,14 +66,14 @@
 
 /* Yellow */
 
-/* :root {
+:root {
     --text-color: #000000;
     --background-color: #f9f9b9;
     --primary-color: #dfdf96;
     --secondary-color: #c5c57d;
     --tertiary-color: #97976d;
     --loading-color: #8d8d49;
-} */
+}
 
 /* Gray */
 
@@ -144,6 +144,10 @@ body {
 
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    display: hidden;
 }
 
 .row {

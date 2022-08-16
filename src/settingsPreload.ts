@@ -9,4 +9,6 @@ contextBridge.exposeInMainWorld('api', {
 
     onShow: (callback: () => void) => ipcRenderer.on('show', callback),
     onHide: (callback: () => void) => ipcRenderer.on('hide', callback),
+
+    lockButtonPressed: (isOn: boolean) => ipcRenderer.send('lockButtonPressed', isOn),
 })
