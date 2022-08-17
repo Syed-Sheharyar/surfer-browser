@@ -1,3 +1,6 @@
+
+/* White */
+
 /* :root {
     --text-color: #000000;
     --background-color: #ffffff;
@@ -9,7 +12,29 @@
 
 /* Experimenting with other color themes, no theme style switcher functionality implemented, though */
 
-/* Cyan */
+/* Cherry */
+
+:root {
+    --text-color: #000000;
+    --background-color: #f9b9d7;
+    --primary-color: #df96b8;
+    --secondary-color: #c57d9e;
+    --tertiary-color: #976d81;
+    --loading-color: #8d4969;
+}
+
+/* Strawberry */
+
+/* :root {
+    --text-color: #000000;
+    --background-color: #f9b9ba;
+    --primary-color: #df9697;
+    --secondary-color: #c57d7e;
+    --tertiary-color: #976d6e;
+    --loading-color: #8d494a;
+} */
+
+/* Sea Cyan */
 
 /* :root {
     --text-color: #000000;
@@ -20,7 +45,7 @@
     --loading-color: #49828d;
 } */
 
-/* Blue */
+/* Ocean Blue */
 
 /* :root {
     --text-color: #000000;
@@ -29,17 +54,6 @@
     --secondary-color: #7d9dc5;
     --tertiary-color: #6d8097;
     --loading-color: #49688d;
-} */
-
-/* Pink */
-
-/* :root {
-    --text-color: #000000;
-    --background-color: #f9b9d7;
-    --primary-color: #df96b8;
-    --secondary-color: #c57d9e;
-    --tertiary-color: #976d81;
-    --loading-color: #8d4969;
 } */
 
 /* Mint */
@@ -64,16 +78,36 @@
     --loading-color: #598d49;
 } */
 
-/* Yellow */
+/* Banana */
 
-:root {
+/* :root {
     --text-color: #000000;
     --background-color: #f9f9b9;
     --primary-color: #dfdf96;
     --secondary-color: #c5c57d;
     --tertiary-color: #97976d;
     --loading-color: #8d8d49;
-}
+} */
+
+/* Lemon */
+
+/* :root {
+    --text-color: #000000;
+    --background-color: #f2f274;
+    --primary-color: #d1d14f;
+    --secondary-color: #a6a632;
+    --tertiary-color: #99991f;
+    --loading-color: #73730e;
+} */
+
+/* :root {
+    --text-color: #000000;
+    --background-color: #f2f288;
+    --primary-color: #d1d160;
+    --secondary-color: #a6a63f;
+    --tertiary-color: #99992b;
+    --loading-color: #737317;
+} */
 
 /* Gray */
 
