@@ -1,27 +1,27 @@
 
 /* White */
 
-/* :root {
+:root {
     --text-color: #000000;
     --background-color: #ffffff;
     --primary-color: #dadada;
     --secondary-color: #c8c8c8;
     --tertiary-color: #7e7e7e;
     --loading-color: #7db6e8;
-} */
+}
 
 /* Experimenting with other color themes, no theme style switcher functionality implemented, though */
 
 /* Cherry */
 
-:root {
+/* :root {
     --text-color: #000000;
     --background-color: #f9b9d7;
     --primary-color: #df96b8;
     --secondary-color: #c57d9e;
     --tertiary-color: #976d81;
     --loading-color: #8d4969;
-}
+} */
 
 /* Strawberry */
 

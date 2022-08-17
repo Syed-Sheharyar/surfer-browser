@@ -32,12 +32,17 @@ window.api.handleSetTheme((_ev: Event, theme: 'dark' | 'light') => {
     document.documentElement.setAttribute('data-theme', theme)
 })
 
+
 window.api.handleStartedLoading(() => {
     progressBar.style.backgroundColor = 'var(--loading-color)'
+    refreshButton.style.paddingTop = '2px'
+    refreshButton.innerHTML = '&#10005'
 })
 
 window.api.handleFinishedLoading(() => {
     progressBar.style.backgroundColor = 'var(--primary-color)'
+    refreshButton.style.paddingTop = '1px'
+    refreshButton.innerHTML = '&#10227'
 })
 
 window.api.handleRemoveLeftMargin(() => {
@@ -56,13 +61,8 @@ forwardButton.addEventListener('click', () => {
     window.api.forwardButtonPressed()
 })
 
-let canRefresh = true
 refreshButton.addEventListener('click', () => {
-    if (canRefresh) {
-        window.api.refreshButtonPressed()
-        canRefresh = false
-        setTimeout(() => canRefresh = true, 400)
-    }
+    window.api.refreshButtonPressed()
 })
 
 settingsButton.addEventListener('click', () => {

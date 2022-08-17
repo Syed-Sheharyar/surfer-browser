@@ -138,7 +138,11 @@ export class View {
         })
 
         ipcMain.on('refreshPage', () => {
-            this.view.webContents.reload()
+            if (this.view.webContents.isLoading()) {
+                this.view.webContents.stop()
+            } else {
+                this.view.webContents.reload()
+            }
             this.view.webContents.focus()
         })
 
