@@ -25,14 +25,14 @@
 
 /* Strawberry */
 
-/* :root {
+:root {
     --text-color: #000000;
     --background-color: #f9b9ba;
     --primary-color: #df9697;
     --secondary-color: #c57d7e;
     --tertiary-color: #976d6e;
     --loading-color: #8d494a;
-} */
+}
 
 /* Sea Cyan */
 
@@ -237,13 +237,16 @@ body {
 
     -webkit-app-region: no-drag;
 
-    cursor: text !important;
+    /* cursor: text !important; */
+
+    cursor: default !important;
     
     font-size: 11pt;
 }
 
 #searchBar:focus {
     /* Should be an option in appearance settings. Makes the searchbar darker when focused (typed on). */
+    
     /* background-color: var(--secondary-color);
     border: 2px solid var(--secondary-color); */
 
@@ -339,7 +342,7 @@ body {
 #tabBar {
     width: 100vw;
     height: 30px;
-    min-height: 30px;
+    /* min-height: 30px; */
 
     background-color: var(--background-color);
 
