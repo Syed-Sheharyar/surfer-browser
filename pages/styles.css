@@ -232,9 +232,12 @@ body {
     
     color: var(--text-color);
     
-    -webkit-user-select: none;
-    user-select: none;
+    /* -webkit-user-select: none;
+    user-select: none; */
+
     -webkit-app-region: no-drag;
+
+    cursor: text !important;
     
     font-size: 11pt;
 }
@@ -278,6 +281,8 @@ body {
     border-radius: 5px;
     
     -webkit-app-region: no-drag;
+
+    transition: background-color 80ms ease;
 }
 
 .barButton:hover {
@@ -314,6 +319,8 @@ body {
 /* #forwardButton {} */
 
 /* #refreshButton {} */
+
+/* #newTabButton {} */
 
 #settingsButton {
     margin-right: 5px;
@@ -388,6 +395,8 @@ body {
     
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    transition: color 85ms ease-out;
 }
 
 .tabTitle:hover {
@@ -403,6 +412,8 @@ body {
     width: 1em;
 
     color: var(--tertiary-color);
+
+    transition: color 50ms ease-out;
 }
 
 .closeButton:hover {

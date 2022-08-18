@@ -1,4 +1,3 @@
-
 export function LoadingError(code: number, desc: string, url: string, displayError: (code: number, desc: string) => void): void {
     console.log('Failed loading the page, with the code:')
     console.log(code)
@@ -18,6 +17,7 @@ export function LoadingError(code: number, desc: string, url: string, displayErr
             break
     
         default:
+            displayError(code, desc)
             break
     }
 }

@@ -6,6 +6,7 @@ export class View {
     view: BrowserView
     homePage: boolean
     homeCount: number
+    shouldEnableZoom: boolean
     constructor(width: number, height: number, tabHeight: number, win: BrowserWindow ) {
         this.view = new BrowserView({
             webPreferences: {
@@ -60,11 +61,11 @@ export class View {
         this.view.webContents.on('will-prevent-unload', (event) => {
             const choice = dialog.showMessageBoxSync({
                 type: 'question',
-              buttons: ['Stay', 'Leave'],
-              title: 'Do you want to leave this site?',
-              message: 'Changes that you made may not be saved.',
-              defaultId: 0,
-              cancelId: 1
+                buttons: ['Stay', 'Leave'],
+                title: 'Do you want to leave this site?',
+                message: 'Changes that you made may not be saved.',
+                defaultId: 0,
+                cancelId: 1
             })
             const leave = (choice === 1)
             if (leave) {
@@ -92,13 +93,30 @@ export class View {
             updateSearchBar(_ev, url)
             win.webContents.send('canGoBack', this.view.webContents.canGoBack())
             win.webContents.send('canGoForward', this.view.webContents.canGoForward())
-        })
 
-        this.view.webContents.on('did-finish-load', () => {
+            win.webContents.send('canRefresh', this.homePage)
+
+            if (this.homePage) {
+                this.shouldEnableZoom = false
+            } else {
+                if (this.homeCount === 1) {
+                    // this.view.webContents.clearHistory()
+                    // win.webContents.send('canGoBack', this.view.webContents.canGoBack())
+                }
+                this.shouldEnableZoom = true
+            }
+
             this.homeCount += 1
             if (this.homeCount > 0) {
                 this.homePage = false
             }
+        })
+
+        this.view.webContents.on('did-finish-load', () => {
+            // this.homeCount += 1
+            // if (this.homeCount > 0) {
+            //     this.homePage = false
+            // }
         })
 
         // this.view.webContents.on('did-navigate', () => {
@@ -108,7 +126,14 @@ export class View {
         // })
 
         const doneLoading = () => {
-            this.view.webContents.setVisualZoomLevelLimits(1, 3)
+            if (this.shouldEnableZoom) {
+                this.view.webContents.setVisualZoomLevelLimits(1, 3)
+            } else {
+                this.view.webContents.setVisualZoomLevelLimits(1, 1)
+            }
+            if (this.view.webContents.getURL() === 'file://' + path.join(__dirname, "../pages/favorites.html")) {
+                this.view.webContents.setVisualZoomLevelLimits(1, 1)
+            }
             win.webContents.send('finishedLoading')
         }
         
@@ -156,6 +181,11 @@ export class View {
                 win.webContents.send('setSearchBarURL', '')
                 return
             }
+            if (this.view.webContents.getURL() === 'file://' + path.join(__dirname, "../pages/favorites.html")) {
+                win.webContents.send('setSearchBar', 'surfer://favorites')
+                win.webContents.send('setSearchBarURL', 'surfer://favorites')
+                return
+            }
             let text: string
             if (typeof url === undefined) {
                 return
@@ -194,8 +224,8 @@ export class View {
     }
 
     goHome(): void {
-        // this.view.webContents.loadFile(path.join(__dirname, "../pages/favorites.html"))
-        this.view.webContents.loadURL('https://google.com/')
+        this.view.webContents.loadFile(path.join(__dirname, "../pages/favorites.html"))
+        // this.view.webContents.loadURL('https://google.com/')
         this.homeCount = 0
         this.homePage = true
         this.view.webContents.focus()

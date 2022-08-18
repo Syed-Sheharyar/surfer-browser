@@ -19,6 +19,8 @@ contextBridge.exposeInMainWorld('api', {
     handleCanGoBack: (callback: () => void) => ipcRenderer.on('canGoBack', callback),
     handleCanGoForward: (callback: () => void) => ipcRenderer.on('canGoForward', callback),
 
+    handleCanRefresh: (callback: () => void) => ipcRenderer.on('canRefresh', callback),
+
     handleWindowFocusedOrBlurred: (callback: () => void) => {
         ipcRenderer.on('windowFocused', callback)
         ipcRenderer.on('windowBlurred', callback)
