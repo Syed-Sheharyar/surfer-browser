@@ -56,7 +56,6 @@ function createWindow() {
     // But it's fine though... surely...
 
     setTimeout(() => {
-        // settingsDropdown = new SettingsDropdown(10, 47, 127, 116, '../pages/settings.html', win.win, view.view, theme)
         settingsDropdown = new SettingsDropdown(10, 10, 127, 116, '../pages/settings.html', win.win, view.view, theme)
         
         ipcMain.on('toggleSettings', () => {

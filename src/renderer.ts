@@ -99,6 +99,7 @@ searchBar.addEventListener('focus', () => {
     searchBarFocused = true
     searchBar.value = searchBarURL
     searchBar.select()
+    setTimeout(() => searchBar.select(), 30)
     // searchBar.setSelectionRange(0, searchBar.value.length)
 })
 

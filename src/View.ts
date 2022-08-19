@@ -210,6 +210,9 @@ export class View {
         }
 
         ipcMain.on('searchBarQueryEntered', (_event, query) => {
+            if (query.length === 0) {
+                return
+            }
             if (query.indexOf('https://') === 0 || query.indexOf('http://') === 0) {
                 this.view.webContents.loadURL(query)
             } else if (query.includes('://')) {
