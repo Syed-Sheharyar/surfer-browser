@@ -227,8 +227,8 @@ export class View {
     }
 
     goHome(): void {
-        this.view.webContents.loadFile(path.join(__dirname, "../pages/favorites.html"))
-        // this.view.webContents.loadURL('https://google.com/')
+        // this.view.webContents.loadFile(path.join(__dirname, "../pages/favorites.html"))
+        this.view.webContents.loadURL('https://google.com/')
         this.homeCount = 0
         this.homePage = true
         this.view.webContents.focus()
