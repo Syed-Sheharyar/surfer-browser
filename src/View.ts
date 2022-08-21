@@ -17,6 +17,9 @@ export class View {
                 webSecurity: true,
                 allowRunningInsecureContent: false,
                 contextIsolation: true,
+                safeDialogs: true,
+                autoplayPolicy: 'user-gesture-required',
+                minimumFontSize: 6, // Resemble Chrome's settings
                 webviewTag: false,
                 zoomFactor: 1.0,
                 navigateOnDragDrop: true,
@@ -94,7 +97,7 @@ export class View {
             win.webContents.send('canGoBack', this.view.webContents.canGoBack())
             win.webContents.send('canGoForward', this.view.webContents.canGoForward())
 
-            win.webContents.send('canRefresh', this.homePage)
+            // win.webContents.send('canRefresh', this.homePage)
 
             if (this.homePage) {
                 this.shouldEnableZoom = false

@@ -47,7 +47,7 @@ function createWindow() {
 
     setUserAgent()
 
-    win = new Window(800, 600, false, theme)
+    win = new Window(800, 600, false)
     view = new View(800, 600, 37*2-5, win.win)
 
     // Create the settings dropdown 1 second after creating the BrowserView to make sure
@@ -76,14 +76,6 @@ function createWindow() {
     })
     
     setTheme(theme)
-    
-    // When the window is created, it's given a background color according
-    // to its theme (not the simple black/white). But it makes the pages that have no background (transparent)
-    // appear incorrectly as they usually assume the background to be white.
-    win.win.on('ready-to-show', () => {
-        win.win.setBackgroundColor(theme === 'dark' ? '#000000' : '#FFFFFF')
-    })
-    
 }
 
 app.on("ready", () => {

@@ -4,7 +4,7 @@ import * as path from "path"
 export class Window {
     win: BrowserWindow
 
-    constructor(width: number, height: number, devTools: boolean, theme: 'dark' | 'light') {
+    constructor(width: number, height: number, devTools: boolean) {
         this.win = new BrowserWindow({
             width: width,
             height: height,
@@ -16,7 +16,18 @@ export class Window {
                 preload: path.join(__dirname, "preload.js"),
             },
             titleBarStyle: "hiddenInset",
-            backgroundColor: (theme === "dark") ? "#262626" : "#dadada",
+            // backgroundColor: (theme === "dark") ? "#262626" : "#dadada",
+            backgroundColor: "#FFFFFF",
+            show: false
+        })
+        
+        // NO LONGER THE CASE:
+        // When the window is created, it's given a background color according
+        // to its theme (not the simple black/white). But it makes the pages that have no background (transparent bakcground)
+        // appear incorrectly as they usually assume the background to be white.
+        this.win.on('ready-to-show', () => {
+            this.win.show()
+            // this.win.setBackgroundColor('#FFFFFF')
         })
         
         this.win.loadFile(path.join(__dirname, "../pages/index.html"))
