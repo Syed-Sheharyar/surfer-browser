@@ -2,6 +2,9 @@ import { BrowserView, BrowserWindow, ipcMain, dialog, MenuItem, Menu } from "ele
 import * as path from "path"
 import { LoadingError } from "./LoadingError"
 
+import { ElectronBlocker } from '@cliqz/adblocker-electron'
+import fetch from 'cross-fetch'; // required 'fetch'
+
 export class View {
     view: BrowserView
     homePage: boolean
@@ -32,6 +35,14 @@ export class View {
         this.view.setAutoResize({width: true, height: true})
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
         
+        // this.view.webContents.openDevTools()
+        
+        this.goHome()
+        
+        ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+            blocker.enableBlockingInSession(this.view.webContents.session);
+        })
+        
         ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
             const bounds = win.getBounds()
             if (isOn) {
@@ -40,11 +51,6 @@ export class View {
                 this.view.setBounds({ x: 0, y: tabHeight, width: bounds.width, height: bounds.height - tabHeight })
             }
         })
-
-        // this.view.webContents.openDevTools()
-
-        this.goHome()
-
         this.view.webContents.on('focus', () => {
             ipcMain.emit('closeSettings')
         })
