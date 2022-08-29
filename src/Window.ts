@@ -17,8 +17,7 @@ export class Window {
             },
             titleBarStyle: "hiddenInset",
             // backgroundColor: (theme === "dark") ? "#262626" : "#dadada",
-            // backgroundColor: "#FFFFFF",
-            backgroundColor: "#000000",
+            backgroundColor: "#FFFFFF",
             show: false
         })
         
