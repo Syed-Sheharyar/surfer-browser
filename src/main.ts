@@ -65,6 +65,10 @@ function createWindow() {
                 settingsDropdown.show()
             }
         })
+
+        settingsDropdown.view.webContents.on('blur', () => {
+            settingsDropdown.hide()
+        })
         
     }, 1000)
 

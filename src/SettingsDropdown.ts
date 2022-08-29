@@ -42,6 +42,8 @@ export class SettingsDropdown {
         this.open = true
         this.win.setTopBrowserView(this.view)
         this.view.webContents.send('show')
+
+        this.view.webContents.focus()
     }
     
     hide(): void {

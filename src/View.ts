@@ -1,4 +1,4 @@
-import { BrowserView, BrowserWindow, ipcMain, dialog } from "electron"
+import { BrowserView, BrowserWindow, ipcMain, dialog, MenuItem, Menu } from "electron"
 import * as path from "path"
 import { LoadingError } from "./LoadingError"
 
@@ -60,6 +60,93 @@ export class View {
         ipcMain.on('windowFocused', () => {
             this.view.webContents.focus()
         })
+
+        // Contextmenu test
+
+        // ipcMain.on('contextmenu', () => {
+        //     const menu = new Menu()
+            
+        //     const separator = new MenuItem({type: 'separator'})
+        
+        //     const gobackitem = new MenuItem({label: 'Go Back', enabled: this.view.webContents.canGoBack(), click: () => this.view.webContents.goBack()})
+        //     menu.append(gobackitem)
+        
+        //     const goforwarditem = new MenuItem({label: 'Go Forward', enabled: this.view.webContents.canGoForward(), click: () => this.view.webContents.goForward()})
+        //     menu.append(goforwarditem)
+
+        //     const reloaditem = new MenuItem({label: 'Reload', click: () => this.view.webContents.reload()})
+        //     menu.append(reloaditem)
+            
+        //     menu.append(separator)
+
+        //     const cutitem = new MenuItem({label: 'Cut', role: 'cut'})
+        //     menu.append(cutitem)
+            
+        //     const copyitem = new MenuItem({label: 'Copy', role: 'copy'})
+        //     menu.append(copyitem)
+
+        //     const pasteitem = new MenuItem({label: 'Paste', role: 'paste'})
+        //     menu.append(pasteitem)
+
+        //     menu.append(separator)
+
+        //     const undoitem = new MenuItem({label: 'Undo', role: 'undo'})
+        //     menu.append(undoitem)
+
+        //     const redoitem = new MenuItem({label: 'Redo', role: 'redo'})
+        //     menu.append(redoitem)
+
+        //     menu.popup()
+        // })
+
+        // ipcMain.on('contextmenuLink', () => {
+        //     // Open in New Tab
+        //     // Save Link as
+        //     // separator
+        //     // Search with Google
+        //     // separator
+        //     // Copy
+        //     // Copy Link
+        //     // separator
+        //     // Go Back
+        //     // Go Forward
+        //     // separator
+        //     // Inspect Element
+
+        //     const menu = new Menu()
+            
+        //     const separator = new MenuItem({type: 'separator'})
+        
+        //     const openInNewTabItem = new MenuItem({label: 'openInNewTabItem'})
+        //     menu.append(openInNewTabItem)
+        
+        //     const goforwarditem = new MenuItem({label: 'Go Forward', enabled: this.view.webContents.canGoForward(), click: () => this.view.webContents.goForward()})
+        //     menu.append(goforwarditem)
+
+        //     const reloaditem = new MenuItem({label: 'Reload', click: () => this.view.webContents.reload()})
+        //     menu.append(reloaditem)
+            
+        //     menu.append(separator)
+
+        //     const cutitem = new MenuItem({label: 'Cut', role: 'cut'})
+        //     menu.append(cutitem)
+            
+        //     const copyitem = new MenuItem({label: 'Copy', role: 'copy'})
+        //     menu.append(copyitem)
+
+        //     const pasteitem = new MenuItem({label: 'Paste', role: 'paste'})
+        //     menu.append(pasteitem)
+
+        //     menu.append(separator)
+
+        //     const undoitem = new MenuItem({label: 'Undo', role: 'undo'})
+        //     menu.append(undoitem)
+
+        //     const redoitem = new MenuItem({label: 'Redo', role: 'redo'})
+        //     menu.append(redoitem)
+
+        //     menu.popup()
+        // })
         
         this.view.webContents.on('will-prevent-unload', (event) => {
             const choice = dialog.showMessageBoxSync({
@@ -216,9 +303,17 @@ export class View {
             if (query.length === 0) {
                 return
             }
-            if (query.indexOf('https://') === 0 || query.indexOf('http://') === 0) {
+            const localhostRegex = /^localhost:\d+$/
+            const httpHttpsRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
+            // const anyProtocolRegex = /[a-z]+:\/\/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
+            if (localhostRegex.test(query)) {
+                this.view.webContents.loadURL('http://' + query)
+                console.log('localhost')
+            // } else if (query.indexOf('https://') === 0 || query.indexOf('http://') === 0) {
+            } else if (httpHttpsRegex.test(query)) {
                 this.view.webContents.loadURL(query)
             } else if (query.includes('://')) {
+            // } else if (anyProtocolRegex.test(query)) {
                 this.view.webContents.loadURL(query)
             } else if (query.includes('/') || query.includes('.')) {
                 this.view.webContents.loadURL('http://' + query)
