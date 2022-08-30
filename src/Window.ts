@@ -25,7 +25,7 @@ export class Window {
         // When the window is created, it's given a background color according
         // to its theme (not the simple black/white). But it makes the pages that have no background (transparent bakcground)
         // appear incorrectly as they usually assume the background to be white.
-        this.win.on('ready-to-show', () => {
+        this.win.once('ready-to-show', () => {
             this.win.show()
             // this.win.setBackgroundColor('#FFFFFF')
         })

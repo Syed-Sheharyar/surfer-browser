@@ -1,4 +1,4 @@
-import { app, BrowserView, ipcMain, nativeTheme } from "electron"
+import { app, ipcMain, nativeTheme, session } from "electron"
 
 import { Window } from "./Window"
 import { View } from "./View"
@@ -15,9 +15,7 @@ let win: Window
 let view: View
 
 function setUserAgent(): void {
-    let v = new BrowserView
-    const userAgent = v.webContents.getUserAgent()
-    v = null
+    const userAgent = session.defaultSession.getUserAgent()
 
     let surferVersion = userAgent.substring(userAgent.indexOf('Surfer/'))
     surferVersion = surferVersion.substring(0, surferVersion.indexOf(' '))
@@ -43,6 +41,7 @@ function setTheme(theme: 'dark' | 'light') {
 let theme: 'dark' | 'light' = 'light'
 
 function createWindow() {
+
     app.setName('Surfer')
 
     setUserAgent()
