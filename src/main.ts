@@ -54,22 +54,7 @@ function createWindow() {
     // (It's unlikely I can do anything about it considering the way it's implemented right now.)
     // But it's fine though... surely...
 
-    setTimeout(() => {
-        settingsDropdown = new SettingsDropdown(10, 10, 127, 116, '../pages/settings.html', win.win, view.view, theme)
-        
-        ipcMain.on('toggleSettings', () => {
-            if (settingsDropdown.open) {
-                settingsDropdown.hide()
-            } else {
-                settingsDropdown.show()
-            }
-        })
-
-        settingsDropdown.view.webContents.on('blur', () => {
-            settingsDropdown.hide()
-        })
-        
-    }, 1000)
+    settingsDropdown = new SettingsDropdown(10, 10, 127, 116, '../pages/settings.html', win.win, view.view, theme)
 
     // To-do separate theme handling logic into a seperate file/class.
     

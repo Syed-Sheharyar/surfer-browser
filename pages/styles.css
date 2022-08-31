@@ -25,14 +25,14 @@
 
 /* Peach */
 
-:root {
+/* :root {
     --text-color: #000000;
     --background-color: #f9b9ba;
     --primary-color: #df9697;
     --secondary-color: #c57d7e;
     --tertiary-color: #976d6e;
     --loading-color: #8d494a;
-}
+} */
 
 /* Sea Cyan */
 
@@ -47,14 +47,14 @@
 
 /* Ocean Blue */
 
-/* :root {
+:root {
     --text-color: #000000;
     --background-color: #bad6f9;
     --primary-color: #96b7df;
     --secondary-color: #7d9dc5;
     --tertiary-color: #6d8097;
     --loading-color: #49688d;
-} */
+}
 
 /* Mint */
 
@@ -287,13 +287,13 @@ body {
     border-radius: 5px;
     
     -webkit-app-region: no-drag;
-
-    transition: background-color 80ms ease;
 }
 
 .barButton:hover {
     background-color: var(--primary-color);
     border: 2px solid var(--primary-color);
+
+    transition: background-color 80ms ease;
 }
 
 .barButton:active {

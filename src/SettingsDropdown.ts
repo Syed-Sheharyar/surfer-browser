@@ -6,6 +6,7 @@ export class SettingsDropdown {
     win: BrowserWindow
     v: BrowserView
     open: boolean
+    canOpen: boolean
     constructor(xMargin: number, yMargin: number, width: number, height: number, fileName: string, win: BrowserWindow, v: BrowserView, theme: 'dark' | 'light') {
         this.view = new BrowserView({webPreferences: {preload: path.join(__dirname, "settingsPreload.js")}})
         this.win = win
@@ -15,13 +16,19 @@ export class SettingsDropdown {
 
         this.win.addBrowserView(this.view)
         this.view.setBounds({ x: this.win.getBounds().width - xMargin - width, y: y, width: width, height: height })
-        this.view.webContents.send('setTheme', theme)
         
         this.hide()
-        // this.open = true
         
-        ipcMain.on('closeSettings', () => {
-            this.hide()
+        this.view.webContents.send('setTheme', theme)
+        
+        ipcMain.on('toggleSettings', () => {
+            if (this.open) {
+                this.hide()
+            } else {
+                if (this.canOpen) {
+                    this.show()
+                }
+            }
         })
         
         ipcMain.on('lockButtonPressed', () => {
@@ -35,6 +42,10 @@ export class SettingsDropdown {
         
         this.win.on('resize', () => {
             this.view.setBounds({ x: this.win.getBounds().width - xMargin - width, y: y, width: width, height: height })
+        })
+
+        this.view.webContents.on('blur', () => {
+            this.hide()
         })
     }
 
@@ -53,5 +64,10 @@ export class SettingsDropdown {
         this.open = false
         this.win.setTopBrowserView(this.v)
         this.view.webContents.send('hide')
+
+        this.canOpen = false
+        setTimeout(() => {
+            this.canOpen = true
+        }, 100)
     }
 }

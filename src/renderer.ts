@@ -10,21 +10,6 @@ const nonDoubleClickableElements = document.querySelectorAll('.barButton, #searc
 const tabBar = document.getElementById('tabBar')
 const spacingBar = document.getElementById('spacingBar')
 
-let canHideSettings = false
-
-settingsButton.addEventListener('mouseenter', () => {
-    canHideSettings = false
-})
-settingsButton.addEventListener('mouseout', () => {
-    canHideSettings = true
-})
-
-window.addEventListener('mousedown', () => {
-    if (canHideSettings) {
-        window.api.titleBarClicked()
-    }
-})
-
 document.documentElement.setAttribute('data-theme', 'light')
 // document.documentElement.setAttribute('data-theme', 'dark')
 
