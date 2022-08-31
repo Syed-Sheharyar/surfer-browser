@@ -62,10 +62,6 @@ window.api.handleCanGoForward((_ev: Event, canGoForward: boolean) => {
     forwardButton.disabled = !canGoForward
 })
 
-window.api.handleCanRefresh((_ev: Event, canRefresh: boolean) => {
-    refreshButton.disabled = canRefresh
-})
-
 searchBar.addEventListener('keyup' , (event: KeyboardEvent) => {
     //key code for enter
     if (event.key === 'Enter') {

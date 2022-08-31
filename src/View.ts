@@ -1,4 +1,4 @@
-import { BrowserView, BrowserWindow, ipcMain, dialog, MenuItem, Menu } from "electron"
+import { BrowserView, BrowserWindow, ipcMain, dialog } from "electron"
 import * as path from "path"
 import { LoadingError } from "./LoadingError"
 
@@ -190,8 +190,6 @@ export class View {
             win.webContents.send('canGoBack', this.view.webContents.canGoBack())
             win.webContents.send('canGoForward', this.view.webContents.canGoForward())
 
-            // win.webContents.send('canRefresh', this.homePage)
-
             if (this.homePage) {
                 this.shouldEnableZoom = false
             } else {
@@ -208,11 +206,8 @@ export class View {
             }
         })
 
-        this.view.webContents.on('did-finish-load', () => {
-            // this.homeCount += 1
-            // if (this.homeCount > 0) {
-            //     this.homePage = false
-            // }
+        this.view.webContents.once('did-finish-load', () => {
+            ipcMain.emit('loadedView')
         })
 
         // this.view.webContents.on('did-navigate', () => {
