@@ -34,6 +34,7 @@ export class View {
         this.view.setBounds({ x: 0, y: tabHeight, width: width, height: height - tabHeight })
         this.view.setAutoResize({width: true, height: true})
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
+        this.view.setBackgroundColor('#FFFFFF')
         
         // this.view.webContents.openDevTools()
         
