@@ -50,7 +50,7 @@ refreshButton.addEventListener('click', () => {
     window.api.refreshButtonPressed()
 })
 
-settingsButton.addEventListener('click', () => {
+settingsButton.addEventListener('mousedown', () => {
     window.api.toggleSettings()
 })
 

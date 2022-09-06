@@ -40,9 +40,9 @@ export class View {
         
         this.goHome()
         
-        ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
-            blocker.enableBlockingInSession(this.view.webContents.session);
-        })
+        // ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+        //     blocker.enableBlockingInSession(this.view.webContents.session);
+        // })
         
         ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
             const bounds = win.getBounds()
@@ -51,9 +51,6 @@ export class View {
             } else {
                 this.view.setBounds({ x: 0, y: tabHeight, width: bounds.width, height: bounds.height - tabHeight })
             }
-        })
-        this.view.webContents.on('focus', () => {
-            ipcMain.emit('closeSettings')
         })
         
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
@@ -67,93 +64,6 @@ export class View {
         ipcMain.on('windowFocused', () => {
             this.view.webContents.focus()
         })
-
-        // Contextmenu test
-
-        // ipcMain.on('contextmenu', () => {
-        //     const menu = new Menu()
-            
-        //     const separator = new MenuItem({type: 'separator'})
-        
-        //     const gobackitem = new MenuItem({label: 'Go Back', enabled: this.view.webContents.canGoBack(), click: () => this.view.webContents.goBack()})
-        //     menu.append(gobackitem)
-        
-        //     const goforwarditem = new MenuItem({label: 'Go Forward', enabled: this.view.webContents.canGoForward(), click: () => this.view.webContents.goForward()})
-        //     menu.append(goforwarditem)
-
-        //     const reloaditem = new MenuItem({label: 'Reload', click: () => this.view.webContents.reload()})
-        //     menu.append(reloaditem)
-            
-        //     menu.append(separator)
-
-        //     const cutitem = new MenuItem({label: 'Cut', role: 'cut'})
-        //     menu.append(cutitem)
-            
-        //     const copyitem = new MenuItem({label: 'Copy', role: 'copy'})
-        //     menu.append(copyitem)
-
-        //     const pasteitem = new MenuItem({label: 'Paste', role: 'paste'})
-        //     menu.append(pasteitem)
-
-        //     menu.append(separator)
-
-        //     const undoitem = new MenuItem({label: 'Undo', role: 'undo'})
-        //     menu.append(undoitem)
-
-        //     const redoitem = new MenuItem({label: 'Redo', role: 'redo'})
-        //     menu.append(redoitem)
-
-        //     menu.popup()
-        // })
-
-        // ipcMain.on('contextmenuLink', () => {
-        //     // Open in New Tab
-        //     // Save Link as
-        //     // separator
-        //     // Search with Google
-        //     // separator
-        //     // Copy
-        //     // Copy Link
-        //     // separator
-        //     // Go Back
-        //     // Go Forward
-        //     // separator
-        //     // Inspect Element
-
-        //     const menu = new Menu()
-            
-        //     const separator = new MenuItem({type: 'separator'})
-        
-        //     const openInNewTabItem = new MenuItem({label: 'openInNewTabItem'})
-        //     menu.append(openInNewTabItem)
-        
-        //     const goforwarditem = new MenuItem({label: 'Go Forward', enabled: this.view.webContents.canGoForward(), click: () => this.view.webContents.goForward()})
-        //     menu.append(goforwarditem)
-
-        //     const reloaditem = new MenuItem({label: 'Reload', click: () => this.view.webContents.reload()})
-        //     menu.append(reloaditem)
-            
-        //     menu.append(separator)
-
-        //     const cutitem = new MenuItem({label: 'Cut', role: 'cut'})
-        //     menu.append(cutitem)
-            
-        //     const copyitem = new MenuItem({label: 'Copy', role: 'copy'})
-        //     menu.append(copyitem)
-
-        //     const pasteitem = new MenuItem({label: 'Paste', role: 'paste'})
-        //     menu.append(pasteitem)
-
-        //     menu.append(separator)
-
-        //     const undoitem = new MenuItem({label: 'Undo', role: 'undo'})
-        //     menu.append(undoitem)
-
-        //     const redoitem = new MenuItem({label: 'Redo', role: 'redo'})
-        //     menu.append(redoitem)
-
-        //     menu.popup()
-        // })
         
         this.view.webContents.on('will-prevent-unload', (event) => {
             const choice = dialog.showMessageBoxSync({

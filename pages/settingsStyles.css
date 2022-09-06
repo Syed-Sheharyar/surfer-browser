@@ -163,6 +163,16 @@ body {
 
     -webkit-user-select: none;
     user-select: none;
+
+    /* transition: filter 140ms ease-in 0ms;
+    transition: opacity 140ms ease-in 0ms; */
+}
+
+body.hidden {
+    filter: blur(3px);
+    opacity: 0;
+    transition: filter 140ms ease-in 0ms;
+    transition: opacity 140ms ease-in 0ms;
 }
 
 #optionsList {

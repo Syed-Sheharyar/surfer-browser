@@ -61,9 +61,9 @@ lockToggleRow.addEventListener('click', onLockToggleClick)
 
 
 window.api.onShow(() => {
-    optionsList.style.visibility = 'visible'
+    document.body.className = ''
 })
 
 window.api.onHide(() => {
-    optionsList.style.visibility = 'hidden'
+    document.body.className = 'hidden'
 })
