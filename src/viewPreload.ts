@@ -8,7 +8,8 @@ window.addEventListener('contextmenu', (event: MouseEvent) => {
         console.log('image')
         ipcRenderer.send('contextmenuImg')
     } else if (elTag === 'A') {
-        console.log('link')
+        console.log('Link:')
+        console.log((<HTMLLinkElement>event.target).href)
         ipcRenderer.send('contextmenuLink')
     } else {
         setTimeout(() => {
