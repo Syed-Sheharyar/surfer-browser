@@ -64,8 +64,10 @@ export class SettingsDropdown {
             ipcMain.emit('closedSettings')
         }
         this.open = false
-        this.win.setTopBrowserView(this.v)
         this.view.webContents.send('hide')
+        setTimeout(() => {
+            this.win.setTopBrowserView(this.v)
+        }, 50)
 
         this.canOpen = false
         setTimeout(() => {
