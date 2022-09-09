@@ -31,8 +31,8 @@ export class View {
             }
         })
         win.addBrowserView(this.view)
-        this.view.setBounds({ x: 0, y: tabHeight, width: width, height: height - tabHeight })
-        this.view.setAutoResize({width: true, height: true})
+        this.view.setBounds({ x: 0, y: 0, width: width, height: height - tabHeight })
+        // this.view.setAutoResize({width: true, height: true})
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
         this.view.setBackgroundColor('#FFFFFF')
         
@@ -44,12 +44,16 @@ export class View {
         //     blocker.enableBlockingInSession(this.view.webContents.session);
         // })
         
-        ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
+	win.on('resize', () => {
+		this.view.setBounds({ x: 0, y: 0, width: win.getBounds().width, height: win.getBounds().height - tabHeight })
+	})        
+
+	ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
             const bounds = win.getBounds()
             if (isOn) {
-                this.view.setBounds({ x: 0, y: 37, width: bounds.width, height: bounds.height - 37 })
+                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - 37 })
             } else {
-                this.view.setBounds({ x: 0, y: tabHeight, width: bounds.width, height: bounds.height - tabHeight })
+                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - tabHeight })
             }
         })
         

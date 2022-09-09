@@ -15,7 +15,8 @@ export class Window {
             webPreferences: {
                 preload: path.join(__dirname, "preload.js"),
             },
-            titleBarStyle: "hiddenInset",
+            titleBarStyle: "hidden",
+            trafficLightPosition: { x: 11.5, y: 575 },
             backgroundColor: "#FFFFFF",
             show: false
         })
@@ -30,6 +31,14 @@ export class Window {
             this.win.webContents.openDevTools({mode: 'undocked'})
         }
 
+        this.win.on('will-resize', (ev: Event, bounds: Electron.Rectangle) => {
+            this.win.setTrafficLightPosition({ x: 11.5, y: bounds.height - 25 })
+        })
+
+        this.win.on('resize', () => {
+            this.win.setTrafficLightPosition({ x: 11.5, y: this.win.getBounds().height - 25 })
+        })
+        
         this.win.on('focus', () => {
             this.win.webContents.send('windowFocused')
             ipcMain.emit('windowFocused')
