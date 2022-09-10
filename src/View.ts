@@ -9,7 +9,7 @@ export class View {
     view: BrowserView
     homePage: boolean
     homeCount: number
-    shouldEnableZoom: boolean
+    isLocked: boolean
     constructor(width: number, height: number, tabHeight: number, win: BrowserWindow ) {
         this.view = new BrowserView({
             webPreferences: {
@@ -40,13 +40,28 @@ export class View {
         
         this.goHome()
         
-        // ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
-        //     blocker.enableBlockingInSession(this.view.webContents.session);
-        // })
+        ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+		blocker.enableBlockingInSession(this.view.webContents.session);
+        })
         
 	win.on('resize', () => {
-		this.view.setBounds({ x: 0, y: 0, width: win.getBounds().width, height: win.getBounds().height - tabHeight })
-	})        
+	    const bounds = win.getBounds()
+            if (this.isLocked) {
+                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - 37 })
+            } else {
+                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - tabHeight })
+            }
+	})
+
+	this.view.webContents.on('did-start-loading', () => {
+            this.view.webContents.insertCSS(':focus { outline-color: #5E9ED6; } * { outline-color: #5E9ED6 }')
+    })
+
+        this.view.webContents.on('did-finish-load', () => {
+            this.view.webContents.insertCSS(':focus { outline-color: #5E9ED6; } * { outline-color: #5E9ED6 }')
+    })
+
+	this.isLocked = false
 
 	ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
             const bounds = win.getBounds()
@@ -55,6 +70,8 @@ export class View {
             } else {
                 this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - tabHeight })
             }
+
+	    this.isLocked = isOn
         })
         
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
@@ -105,16 +122,6 @@ export class View {
             win.webContents.send('canGoBack', this.view.webContents.canGoBack())
             win.webContents.send('canGoForward', this.view.webContents.canGoForward())
 
-            if (this.homePage) {
-                this.shouldEnableZoom = false
-            } else {
-                if (this.homeCount === 1) {
-                    // this.view.webContents.clearHistory()
-                    // win.webContents.send('canGoBack', this.view.webContents.canGoBack())
-                }
-                this.shouldEnableZoom = true
-            }
-
             this.homeCount += 1
             if (this.homeCount > 0) {
                 this.homePage = false
@@ -132,11 +139,7 @@ export class View {
         // })
 
         const doneLoading = () => {
-            if (this.shouldEnableZoom) {
-                this.view.webContents.setVisualZoomLevelLimits(1, 3)
-            } else {
-                this.view.webContents.setVisualZoomLevelLimits(1, 1)
-            }
+            this.view.webContents.setVisualZoomLevelLimits(1, 3)
             if (this.view.webContents.getURL() === 'file://' + path.join(__dirname, "../pages/favorites.html")) {
                 this.view.webContents.setVisualZoomLevelLimits(1, 1)
             }
