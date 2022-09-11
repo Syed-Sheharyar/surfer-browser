@@ -45,20 +45,20 @@ export class View {
         })
         
 	win.on('resize', () => {
-	    const bounds = win.getBounds()
-            if (this.isLocked) {
-                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - 37 })
-            } else {
-                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - tabHeight })
-            }
+        const bounds = win.getBounds()
+        if (this.isLocked) {
+            this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - 37 })
+        } else {
+            this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - tabHeight })
+        }
 	})
 
 	this.view.webContents.on('did-start-loading', () => {
-            this.view.webContents.insertCSS(':focus { outline-color: #5E9ED6; } * { outline-color: #5E9ED6 }')
+            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255) !important; }')
     })
 
         this.view.webContents.on('did-finish-load', () => {
-            this.view.webContents.insertCSS(':focus { outline-color: #5E9ED6; } * { outline-color: #5E9ED6 }')
+            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255) !important; }')
     })
 
 	this.isLocked = false
@@ -71,7 +71,7 @@ export class View {
                 this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - tabHeight })
             }
 
-	    this.isLocked = isOn
+        this.isLocked = isOn
         })
         
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
@@ -114,7 +114,36 @@ export class View {
         
         this.view.webContents.on('leave-html-full-screen', () => {
             const { width: w, height: h } = win.getBounds()
-            this.view.setBounds({ x: 0, y: tabHeight, width: w, height: h - tabHeight })
+            const bounds = win.getBounds()
+            if (this.isLocked) {
+                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - 37 })
+            } else {
+                this.view.setBounds({ x: 0, y: 0, width: bounds.width, height: bounds.height - tabHeight })
+            }
+        })
+
+        ipcMain.on('selectAll', () => {
+            this.view.webContents.selectAll()
+        })
+
+        ipcMain.on('reload', () => {
+            this.view.webContents.reload()
+        })
+
+        ipcMain.on('toggleDevTools', () => {
+            this.view.webContents.toggleDevTools()
+        })
+
+        ipcMain.on('actualSize', () => {
+            this.view.webContents.zoomFactor = 1.0
+        })
+        
+        ipcMain.on('zoomIn', () => {
+            this.view.webContents.zoomFactor += 0.15
+        })
+        
+        ipcMain.on('zoomOut', () => {
+            this.view.webContents.zoomFactor -= 0.15
         })
         
         this.view.webContents.on('did-navigate', (_ev: Event, url: string) => {

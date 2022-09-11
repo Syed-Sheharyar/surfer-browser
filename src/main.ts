@@ -1,5 +1,7 @@
 import { app, ipcMain, nativeTheme, session } from "electron"
 
+import { MenuBar } from "./Menubar"
+
 import { Window } from "./Window"
 import { View } from "./View"
 import { SettingsDropdown } from "./SettingsDropdown"
@@ -43,6 +45,8 @@ let theme: 'dark' | 'light' = 'light'
 function createWindow() {
 
     app.setName('Surfer')
+
+    const menu = new MenuBar
 
     setUserAgent()
 
