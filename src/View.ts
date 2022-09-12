@@ -40,9 +40,9 @@ export class View {
         
         this.goHome()
         
-        // ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
-        //     blocker.enableBlockingInSession(this.view.webContents.session);
-        // })
+        ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+            blocker.enableBlockingInSession(this.view.webContents.session);
+        })
         
         ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
             const bounds = win.getBounds()
@@ -51,6 +51,14 @@ export class View {
             } else {
                 this.view.setBounds({ x: 0, y: tabHeight, width: bounds.width, height: bounds.height - tabHeight })
             }
+        })
+
+        this.view.webContents.on('did-start-loading', () => {
+            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255) !important; }')
+        })
+
+        this.view.webContents.on('did-finish-load', () => {
+            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255) !important; }')
         })
         
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
