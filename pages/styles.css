@@ -307,6 +307,7 @@ body {
     border: 2px solid var(--primary-color);
 
     transition: background-color 80ms ease;
+    transition: border-color 80ms ease;
 }
 
 .barButton:active {
