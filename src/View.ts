@@ -54,11 +54,11 @@ export class View {
         })
 
         this.view.webContents.on('did-start-loading', () => {
-            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255) !important; }')
+            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255); }')
         })
 
         this.view.webContents.on('did-finish-load', () => {
-            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255) !important; }')
+            this.view.webContents.insertCSS('*:focus { outline-color: rgb(0, 117, 255); }')
         })
         
         this.view.webContents.on('will-navigate', (ev: Event, url: string) => {
