@@ -82,11 +82,13 @@ searchBar.addEventListener('focus', () => {
     searchBar.select()
     setTimeout(() => searchBar.select(), 30)
     // searchBar.setSelectionRange(0, searchBar.value.length)
+    searchBar.style.background = "var(--background-color)"
 })
 
 searchBar.addEventListener('blur', () => {
     searchBarFocused = false
     searchBar.value = searchBarText
+    searchBar.style.background = "var(--primary-color)"
 })
 
 let searchBarText = ''
