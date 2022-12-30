@@ -182,9 +182,10 @@ body {
     gap: 5px;
     
     /* Make window draggable from the title bar */
+    -webkit-app-region: drag;
+    
     -webkit-user-select: none;
     user-select: none;
-    -webkit-app-region: drag;
 }
 
 /* Got help from https://stackoverflow.com/questions/42144413/centering-a-specific-element-among-others-with-flexbox */
