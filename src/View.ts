@@ -10,6 +10,7 @@ export class View {
     homePage: boolean
     homeCount: number
     shouldEnableZoom: boolean
+    locked: boolean
     constructor(width: number, height: number, tabHeight: number, win: BrowserWindow ) {
         this.view = new BrowserView({
             webPreferences: {
@@ -35,6 +36,8 @@ export class View {
         this.view.setAutoResize({width: true, height: true})
         this.view.webContents.setVisualZoomLevelLimits(1, 3)
         this.view.setBackgroundColor('#FFFFFF')
+
+        this.locked = false
         
         // this.view.webContents.openDevTools()
         
@@ -46,6 +49,7 @@ export class View {
         
         ipcMain.on('lockButtonPressed', (_ev: Event, isOn: boolean) => {
             const bounds = win.getBounds()
+            this.locked = isOn
             if (isOn) {
                 this.view.setBounds({ x: 0, y: 37, width: bounds.width, height: bounds.height - 37 })
             } else {
@@ -101,7 +105,7 @@ export class View {
         
         this.view.webContents.on('leave-html-full-screen', () => {
             const { width: w, height: h } = win.getBounds()
-            this.view.setBounds({ x: 0, y: tabHeight, width: w, height: h - tabHeight })
+            this.view.setBounds({ x: 0, y: this.locked ? 37 : tabHeight, width: w, height: h - (this.locked ? 37 : tabHeight) })
         })
         
         this.view.webContents.on('did-navigate', (_ev: Event, url: string) => {
